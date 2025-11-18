@@ -207,6 +207,7 @@ export const RedisTableViewer: React.FC<RedisBaseTableProps> = ({
                 <Editor
                   value={formValues[field.name] || ''}
                   onChange={(e) => {
+                    console.log(field.name, e)
                     onFieldChange(field.name, e)
                   }}
                 />
