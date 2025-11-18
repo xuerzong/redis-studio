@@ -4,17 +4,18 @@ import {
   RefreshCcwIcon,
   TrashIcon,
 } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 import { Box } from '@/client/components/ui/Box'
 import { keysToTree } from '@/client/utils/tree'
-import { Button, IconButton } from '@/client/components/ui/Button'
+import { IconButton } from '@/client/components/ui/Button'
 import { RedisKeysTree } from '@/client/components/Redis/RedisKeysTree'
 import { Tooltip } from '@/client/components/ui/Tooltip'
 import { RedisKeyViewer } from '@/client/components/Redis/RedisKeyViewer'
 import { Loader } from '@/client/components/Loader'
 import { RedisKeyCreateForm } from '@/client/components/RedisKeyForm'
 import { RedisKeySearchInput } from '@/client/components/Redis/RedisKeySearchInput'
+import { RedisDeleteModal } from '@/client/components/Redis/RedisDeleteModal'
 import {
   changeKeysCountLimit,
   changeRedisId,
@@ -24,19 +25,14 @@ import {
   useRedisStore,
 } from '@/client/stores/redisStore'
 import { DropdownMenu } from '@/client/components/ui/DropdownMenu'
-import { Modal } from '@/client/components/ui/Modal'
-import { toast } from 'sonner'
 import { useRedisId } from '@/client/hooks/useRedisId'
-import { useNavigate } from 'react-router'
 import { sendCommand, sendRequest } from '@/client/utils/invoke'
 import { Select } from '@/client/components/ui/Select'
 import s from './index.module.scss'
 
 const Page = () => {
   const redisId = useRedisId()
-  const navigate = useNavigate()
-  const [confirmDelOpen, setConfirmDelOpen] = useState(false)
-
+  const [delOpen, setDelOpen] = useState(false)
   const keysState = useRedisStore((state) => state.keysState)
   const viewerState = useRedisStore((state) => state.viewerState)
   const selectedKey = useRedisStore((state) => state.selectedKey)
@@ -135,7 +131,7 @@ const Page = () => {
                 key: 'Delete',
                 icon: <TrashIcon />,
                 onClick() {
-                  setConfirmDelOpen(true)
+                  setDelOpen(true)
                 },
               },
             ]}
@@ -228,48 +224,98 @@ const Page = () => {
         </Panel>
       </PanelGroup>
 
-      <Modal
-        title="Delete Connection"
-        description="Confirm delete this connection?"
-        footer={
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            gap="var(--spacing-md)"
-            padding="1rem"
-          >
-            <Button variant="outline" onClick={() => setConfirmDelOpen(false)}>
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                toast.promise(
-                  sendRequest({
-                    url: '/api/connection',
-                    method: 'DELETE',
-                    body: { id: redisId },
-                  }),
-                  {
-                    loading: 'Loading...',
-                    success: () => {
-                      navigate('/')
-                      return 'Delete Connection Successfully'
-                    },
-                    error: (e) => e.message || 'Delete Connection Failed',
-                  }
-                )
-              }}
-            >
-              Confirm
-            </Button>
-          </Box>
-        }
-        open={confirmDelOpen}
-        onOpenChange={setConfirmDelOpen}
+      <RedisDeleteModal
+        redisId={redisId}
+        open={delOpen}
+        onOpenChange={setDelOpen}
       />
     </Box>
   )
 }
 
-export default Page
+const ConnectRedisLoader: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  const redisId = useRedisId()
+  const [status, setStatus] = useState(0)
+  const [error, setError] = useState(false)
+  const retryTimeRef = useRef(10)
+  const retryTimerRef = useRef<any>(null)
+
+  const queryConnectionStatus = async (id: string) => {
+    retryTimeRef.current = retryTimeRef.current - 1
+    return sendRequest({
+      method: 'GET',
+      url: '/api/connection/status',
+      query: { id },
+    }).then((res) => {
+      if (res !== 1) {
+        if (retryTimeRef.current > 0) {
+          retryTimerRef.current = setTimeout(() => {
+            queryConnectionStatus(id)
+          }, 1000)
+        } else {
+          setError(true)
+        }
+      }
+      setStatus(res)
+    })
+  }
+
+  useEffect(() => {
+    setStatus(0)
+    setError(false)
+    retryTimeRef.current = 10
+  }, [redisId])
+
+  useEffect(() => {
+    queryConnectionStatus(redisId)
+    return () => {
+      clearTimeout(retryTimerRef.current)
+    }
+  }, [redisId])
+
+  if (error)
+    return (
+      <Box
+        width="100%"
+        height="100%"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        gap="var(--spacing-md)"
+      >
+        Connect Redis Failed
+      </Box>
+    )
+
+  return (
+    <>
+      {status === 1 ? (
+        children
+      ) : (
+        <Box
+          width="100%"
+          height="100%"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          gap="var(--spacing-md)"
+        >
+          <Loader />
+          <Box>Connecting</Box>
+        </Box>
+      )}
+    </>
+  )
+}
+
+export default () => {
+  return (
+    <ConnectRedisLoader>
+      <Page />
+    </ConnectRedisLoader>
+  )
+}

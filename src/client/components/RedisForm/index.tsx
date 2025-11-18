@@ -1,10 +1,14 @@
 import { useState } from 'react'
+import z from 'zod'
+import { useNavigate } from 'react-router'
+import { toast } from 'sonner'
 import { Box } from '@/client/components/ui/Box'
 import { Button } from '@/client/components/ui/Button'
 import { Input } from '@/client/components/ui/Input'
 import { FormField } from '@/client/components/ui/Form'
+import { sendRequest } from '@/client/utils/invoke'
+import { queryConnections } from '@/client/stores/appStore'
 import s from './index.module.scss'
-import z from 'zod'
 
 interface RedisFormData {
   host: string
@@ -20,8 +24,11 @@ const RedisFormSchema = z.object({
   password: z.string(),
 })
 
+export type RedisFormMode = 0 | 1
+
 interface RedisFormProps {
   defaultValues?: Partial<RedisFormData>
+  mode?: RedisFormMode
 }
 
 const DEFAULT_DATA: RedisFormData = {
@@ -31,7 +38,11 @@ const DEFAULT_DATA: RedisFormData = {
   password: '',
 }
 
-export const RedisForm: React.FC<RedisFormProps> = ({ defaultValues }) => {
+export const RedisForm: React.FC<RedisFormProps> = ({
+  defaultValues,
+  mode = 1,
+}) => {
+  const navigate = useNavigate()
   const [submitLoading, setSubmitLoading] = useState(false)
   const [values, setValues] = useState<RedisFormData>({
     ...DEFAULT_DATA,
@@ -50,9 +61,29 @@ export const RedisForm: React.FC<RedisFormProps> = ({ defaultValues }) => {
     setSubmitLoading(true)
     const { success, data } = await validateValues()
     if (!success) {
+      toast.error('Form Data Error')
+      return
     }
-    console.log(data)
-    setSubmitLoading(false)
+
+    toast.promise(
+      sendRequest({
+        method: 'POST',
+        url: '/api/connection',
+        body: data,
+      }),
+      {
+        loading: 'Loading...',
+        success(newConnectionId) {
+          navigate(`/${newConnectionId}`)
+          queryConnections()
+          return 'Create Connection Successfully'
+        },
+        error(error) {
+          console.error(error)
+          return error.message || 'Create Connection Failed'
+        },
+      }
+    )
   }
 
   const onSaveConnection = async () => {
@@ -73,7 +104,7 @@ export const RedisForm: React.FC<RedisFormProps> = ({ defaultValues }) => {
             onChange={(e) => {
               onChange({ host: e.target.value.trim() })
             }}
-            placeholder="Input"
+            placeholder="HOST"
           />
         </FormField>
 
@@ -93,7 +124,7 @@ export const RedisForm: React.FC<RedisFormProps> = ({ defaultValues }) => {
             onChange={(e) => {
               onChange({ username: e.target.value.trim() })
             }}
-            placeholder="Input"
+            placeholder="USER NAME"
           />
         </FormField>
 
@@ -103,7 +134,7 @@ export const RedisForm: React.FC<RedisFormProps> = ({ defaultValues }) => {
             onChange={(e) => {
               onChange({ password: e.target.value.trim() })
             }}
-            placeholder="Input"
+            placeholder="PASSWORD"
           />
         </FormField>
       </Box>
@@ -113,12 +144,25 @@ export const RedisForm: React.FC<RedisFormProps> = ({ defaultValues }) => {
         justifyContent="flex-end"
         gap="var(--spacing-md)"
       >
-        <Button onClick={onSaveConnection} disabled={submitLoading}>
-          Save Connection
-        </Button>
-        <Button onClick={onCreateConnection} disabled={submitLoading}>
-          Create Connection
-        </Button>
+        {mode === 0 && (
+          <Button
+            onClick={onSaveConnection}
+            loading={submitLoading}
+            disabled={submitLoading}
+          >
+            Save Connection
+          </Button>
+        )}
+
+        {mode === 1 && (
+          <Button
+            onClick={onCreateConnection}
+            loading={submitLoading}
+            disabled={submitLoading}
+          >
+            Create Connection
+          </Button>
+        )}
       </Box>
     </Box>
   )

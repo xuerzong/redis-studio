@@ -1,7 +1,7 @@
 import { create } from 'zustand'
-import { getKeys, getRedisState } from '../commands/redis'
-import type { RedisKeyType } from '@/constants/redisKeyTypes'
 import { subscribeWithSelector } from 'zustand/middleware'
+import type { RedisKeyType } from '@/constants/redisKeyTypes'
+import { getKeys, getRedisState } from '../commands/redis'
 
 interface RedisStoreState {
   id: string
@@ -141,6 +141,17 @@ redisStore.subscribe(
       a.id === b.id &&
       a.searchValue === b.searchValue &&
       a.keysCountLimit === b.keysCountLimit,
+  }
+)
+
+redisStore.subscribe(
+  (state) => state.id,
+  (newId) => {
+    // Reset all state
+    redisStore.setState({
+      ...initState,
+      id: newId,
+    })
   }
 )
 
