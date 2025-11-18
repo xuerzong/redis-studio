@@ -12,10 +12,10 @@ import {
   setHASHData,
   setLISTData,
   setSETData,
-  setSTREAMData,
   setSTRINGData,
   setZSETData,
 } from '@/client/commands/redis'
+import { setSTREAMData } from '@/client/commands/redis/STREAM'
 import { queryRedisKeys } from '@/client/stores/redisStore'
 
 const defaultValues = {
@@ -70,9 +70,9 @@ export const RedisKeyCreateForm = () => {
             ])
             break
           case 'STREAM':
-            setSTREAMData(redisId, values.key, [
-              { id: 'New Key', value: 'New Value' },
-            ])
+            setSTREAMData(redisId, values.key, {
+              value: JSON.stringify({ key: 'New Key', value: 'New Value' }),
+            })
             break
           default:
             break
