@@ -34,8 +34,8 @@ export const RedisSETTable: React.FC<RedisSETTableProps> = (props) => {
         if (values.member === lastValues.member) {
           return
         }
-        await delSETData(redisId, redisKeyState.keyName, values)
-        await setSETData(redisId, redisKeyState.keyName, [values.member])
+        await delSETData(redisId, redisKeyState.keyName, lastValues)
+        await setSETData(redisId, redisKeyState.keyName, [values])
         refreshRedisKeyState()
       }}
       onRowDel={async (values) => {
