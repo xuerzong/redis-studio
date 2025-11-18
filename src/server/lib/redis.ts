@@ -9,6 +9,7 @@ interface RedisConfig {
 
 export class RedisMap {
   instances: Map<string, Redis>
+  instancesStatus: Map<string, number>
 
   static getKey(config: RedisConfig) {
     return `${config.host}_${config.port}_${config.username}_${config.password}`
@@ -36,13 +37,12 @@ export class RedisMap {
       }
     }
 
-    console.log(result)
-
     return result
   }
 
   constructor() {
     this.instances = new Map()
+    this.instancesStatus = new Map()
   }
 
   getInstance(config: RedisConfig) {
@@ -51,9 +51,25 @@ export class RedisMap {
       return this.instances.get(key)!
     }
 
-    const redis = new Redis(config)
+    const redis = new Redis({
+      ...config,
+    })
+
+    redis.on('error', () => {
+      this.instancesStatus.set(key, -1)
+    })
+
+    redis.on('connect', () => {
+      this.instancesStatus.set(key, 1)
+    })
 
     redis.on('close', () => {
+      this.instancesStatus.delete(key)
+      this.instances.delete(key)
+    })
+
+    redis.on('end', () => {
+      this.instancesStatus.delete(key)
       this.instances.delete(key)
     })
 
@@ -62,15 +78,20 @@ export class RedisMap {
     return redis
   }
 
+  getInstanceStatus(config: RedisConfig) {
+    const key = RedisMap.getKey(config)
+    return this.instancesStatus.get(key) || 0
+  }
+
   async closeInstance(config: RedisConfig) {
     const key = RedisMap.getKey(config)
-    const redis = this.instances.get(key)
+    const redisInstance = this.instances.get(key)
 
-    if (redis) {
+    if (redisInstance) {
       try {
-        await redis.quit()
+        await redisInstance.quit()
       } catch {
-        redis.disconnect()
+        redisInstance.disconnect()
       }
     }
   }

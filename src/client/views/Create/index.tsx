@@ -1,8 +1,7 @@
 import { RedisForm } from '@/client/components/RedisForm'
 import { Card } from '@/client/components/ui/Card'
-import s from './index.module.scss'
 import { Box } from '@/client/components/ui/Box'
-import { useNavigate } from 'react-router'
+import s from './index.module.scss'
 
 const Page = () => {
   return (

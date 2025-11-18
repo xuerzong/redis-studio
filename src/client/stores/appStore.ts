@@ -1,5 +1,5 @@
-import { type EventKey } from '@/constants/event'
 import { create } from 'zustand'
+import { sendRequest } from '../utils/invoke'
 
 interface AppStoreState {
   init: boolean
@@ -11,8 +11,13 @@ const appStore = create<AppStoreState>(() => ({
   connections: [],
 }))
 
-export const dispatchAppStore = (key: EventKey, payload: any) => {
-  appStore.setState({ [key]: payload })
+export const queryConnections = async () => {
+  return sendRequest({
+    url: '/api/connections',
+    method: 'GET',
+  }).then((res) => {
+    changeConnections(res)
+  })
 }
 
 export const changeConnections = (

@@ -9,6 +9,19 @@ import { redisMap } from '../redis'
 
 const { bgGreen, white } = picocolors
 
+const getConfigById = async (id: string) => {
+  const config = await connectionDb.find(id)
+  if (!config) {
+    return
+  }
+  return {
+    host: config.host,
+    password: config.password,
+    username: config.username,
+    port: Number(config.port),
+  }
+}
+
 export const useWebsocketServer = (server: HttpServer | HTTPSServer) => {
   const wss = new WebSocketServer({ server })
   wss.on('connection', (ws) => {
@@ -28,12 +41,21 @@ export const useWebsocketServer = (server: HttpServer | HTTPSServer) => {
             break
 
           case Events.sendRequest: {
-            const { method, url, body } = data
+            const { method, url, body, query } = data
             let response: any = null
             switch (url) {
               case '/api/connections':
                 response = await connectionDb.findMany()
                 break
+              case '/api/connection/status': {
+                const { id } = query
+                const config = await getConfigById(id)
+                // To init the redis instance
+                redisMap.getInstance(config)
+                const redisStatus = redisMap.getInstanceStatus(config)
+                response = redisStatus
+                break
+              }
               case '/api/connection': {
                 if (method === 'POST') {
                   response = await connectionDb.insert(body)
@@ -57,16 +79,16 @@ export const useWebsocketServer = (server: HttpServer | HTTPSServer) => {
 
           case Events.sendCommand: {
             const { id, command, args } = data
-            const config = await connectionDb.find(id)
+            const config = await getConfigById(id)
             if (!config) {
               return
             }
-            const redisInstance = redisMap.getInstance({
-              host: config.host,
-              password: config.password,
-              username: config.username,
-              port: Number(config.port),
-            })
+
+            const redisInstance = redisMap.getInstance(config)
+
+            const redisInstanceStatus = redisMap.getInstanceStatus(config)
+
+            if (redisInstanceStatus !== 1) return
 
             respData = await redisInstance.call(command, ...args)
 
