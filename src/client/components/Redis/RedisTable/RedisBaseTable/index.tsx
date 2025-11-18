@@ -33,6 +33,7 @@ export interface RedisBaseTableProps {
   onRowAdd?: (values: any) => Promise<void>
   onRowEdit?: (values: any, lastValues: any) => Promise<void>
   onRowDel?: (values: any) => Promise<void>
+  defaultFormValues?: Record<string, any>
 }
 
 export const RedisTableViewer: React.FC<RedisBaseTableProps> = ({
@@ -44,12 +45,14 @@ export const RedisTableViewer: React.FC<RedisBaseTableProps> = ({
   onRowAdd,
   onRowEdit,
   onRowDel,
+  defaultFormValues = {},
 }) => {
   const [pageNo, setPageNo] = useState(1)
   const totalPage = Math.max(Math.ceil(length / 100), 1)
   const [formMode, setFormMode] = useState(0)
-  const [formDefaultValues, setFormDefaultValues] = useState<any>({})
-  const [formValues, setFormValues] = useState<any>({})
+  const [formDefaultValues, setFormDefaultValues] =
+    useState<any>(defaultFormValues)
+  const [formValues, setFormValues] = useState<any>(defaultFormValues)
   const [addOpen, setAddOpen] = useState(false)
   const [delOpen, setDelOpen] = useState(false)
   const [delRow, setDelRow] = useState<any>(null)
@@ -57,16 +60,16 @@ export const RedisTableViewer: React.FC<RedisBaseTableProps> = ({
 
   useEffect(() => {
     if (!addOpen) {
-      setFormValues({})
+      setFormValues(defaultFormValues)
       setFormMode(0)
     }
-  }, [addOpen])
+  }, [addOpen, defaultFormValues])
 
   useEffect(() => {
     if (!delOpen) {
-      setFormValues({})
+      setFormValues(defaultFormValues)
     }
-  }, [delOpen])
+  }, [delOpen, defaultFormValues])
 
   const operationColumn: TableColumn<any> = useMemo(
     () => ({
@@ -81,32 +84,36 @@ export const RedisTableViewer: React.FC<RedisBaseTableProps> = ({
             justifyContent="center"
             gap="0.25rem"
           >
-            <IconButton
-              variant="ghost"
-              onClick={() => {
-                setFormMode(1)
-                setAddOpen(true)
-                setFormDefaultValues(record || {})
-                setFormValues(record || {})
-              }}
-            >
-              <PencilIcon />
-            </IconButton>
-            <IconButton
-              variant="ghost"
-              onClick={() => {
-                setDelRow(record)
-                setFormValues(record || {})
-                setDelOpen(true)
-              }}
-            >
-              <TrashIcon />
-            </IconButton>
+            {onRowEdit && (
+              <IconButton
+                variant="ghost"
+                onClick={() => {
+                  setFormMode(1)
+                  setAddOpen(true)
+                  setFormDefaultValues(record || defaultFormValues)
+                  setFormValues(record || defaultFormValues)
+                }}
+              >
+                <PencilIcon />
+              </IconButton>
+            )}
+            {onRowDel && (
+              <IconButton
+                variant="ghost"
+                onClick={() => {
+                  setDelRow(record)
+                  setFormValues(record || defaultFormValues)
+                  setDelOpen(true)
+                }}
+              >
+                <TrashIcon />
+              </IconButton>
+            )}
           </Box>
         )
       },
     }),
-    []
+    [onRowDel, onRowEdit]
   )
 
   const tableColumns = useMemo(() => {
@@ -229,7 +236,10 @@ export const RedisTableViewer: React.FC<RedisBaseTableProps> = ({
                       setAddOpen(false)
                       return 'Add Row Successfully'
                     },
-                    error: 'Add Row Failed',
+                    error: (e) => {
+                      console.error(e)
+                      return e.message || 'Add Row Failed'
+                    },
                   })
                 }
 
@@ -240,7 +250,10 @@ export const RedisTableViewer: React.FC<RedisBaseTableProps> = ({
                       setAddOpen(false)
                       return 'Update Row Successfully'
                     },
-                    error: 'Update Row Failed',
+                    error: (e) => {
+                      console.error(e)
+                      return e.message || 'Update Row Failed'
+                    },
                   })
                 }
               }}

@@ -13,7 +13,7 @@ import {
 import { RedisZSETTable } from '../RedisTable/RedisZSETTable'
 import { RedisLISTTable } from '../RedisTable/RedisLISTTable'
 import { RedisSETTable } from '../RedisTable/RedisSetTable'
-import { RedisStreamTable } from '../RedisTable/ReisStreamTable'
+import { RedisSTREAMTable } from '../RedisTable/RedisSTREAMTable'
 import { RedisHASHTable } from '../RedisTable/RedisHashTable'
 import { Modal } from '../../ui/Modal'
 import { useState } from 'react'
@@ -117,7 +117,7 @@ export const RedisKeyViewerComponent: React.FC = () => {
           />
         )}
         {redisKeyState.type === 'STREAM' && (
-          <RedisStreamTable
+          <RedisSTREAMTable
             dataSource={redisKeyState.value.data}
             length={redisKeyState.value.length}
           />
