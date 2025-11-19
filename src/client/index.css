@@ -16,6 +16,7 @@
   --font-sans: var(--font-mono);
 
   --spacing-md: 0.5rem;
+  --header-height: 4rem;
 }
 
 :root {

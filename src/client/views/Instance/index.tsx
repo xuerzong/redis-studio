@@ -4,6 +4,7 @@ import {
   RefreshCcwIcon,
   SettingsIcon,
   TrashIcon,
+  XIcon,
 } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
@@ -31,7 +32,6 @@ import { useRedisId } from '@/client/hooks/useRedisId'
 import { sendCommand, sendRequest } from '@/client/utils/invoke'
 import { Select } from '@/client/components/ui/Select'
 import s from './index.module.scss'
-import { RedisKeyDeleteModal } from '@/client/components/Redis/RedisKeyDeleteModal'
 
 const Page = () => {
   const redisId = useRedisId()
@@ -241,7 +241,6 @@ const Page = () => {
         open={delOpen}
         onOpenChange={setDelOpen}
       />
-      <RedisKeyDeleteModal />
     </Box>
   )
 }
@@ -299,6 +298,7 @@ const ConnectRedisLoader: React.FC<React.PropsWithChildren> = ({
         justifyContent="center"
         gap="var(--spacing-md)"
       >
+        <XIcon style={{ width: '1.5rem', height: '1.5rem' }} />
         Connect Redis Failed
       </Box>
     )
