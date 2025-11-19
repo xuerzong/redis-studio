@@ -1,12 +1,11 @@
-.form {
-  &_field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
+.FormField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
 
-  &_label {
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
+.FormLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
 }

@@ -1,0 +1,30 @@
+.Switch {
+  position: relative;
+  display: flex;
+  appearance: none;
+  margin: 0;
+  padding: 1px;
+  width: 2.5rem;
+  height: 1.5rem;
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 1.25rem;
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+
+  &[data-checked] {
+    background-color: rgba(var(--color-primary) / 0.5);
+  }
+}
+
+.Thumb {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  border-radius: 100%;
+  background-color: var(--foreground-color);
+  transition: translate 150ms ease;
+
+  &[data-checked] {
+    translate: 1rem 0;
+  }
+}

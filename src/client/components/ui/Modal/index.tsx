@@ -1,5 +1,7 @@
 import { Dialog } from '@base-ui-components/react/dialog'
 import './index.scss'
+import { IconButton } from '../Button'
+import { XIcon } from 'lucide-react'
 
 interface ModalProps {
   title?: string
@@ -30,6 +32,16 @@ export const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
             <Dialog.Description className="ModalDescription">
               {description}
             </Dialog.Description>
+
+            <IconButton
+              variant="ghost"
+              className="ModalCloseIcon"
+              onClick={() => {
+                onOpenChange?.(false)
+              }}
+            >
+              <XIcon />
+            </IconButton>
           </div>
           {children && <div className="ModalWrapper">{children}</div>}
           {footer}

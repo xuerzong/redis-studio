@@ -15,8 +15,8 @@ export const FormField: React.FC<React.PropsWithChildren<FormFieldProps>> = ({
   children,
 }) => {
   return (
-    <div className="form_field">
-      <label className="form_label" htmlFor={name}>
+    <div className="FormField">
+      <label className="FormLabel" htmlFor={name}>
         {label}
       </label>
       {children}
