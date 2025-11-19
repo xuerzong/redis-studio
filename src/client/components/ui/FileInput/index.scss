@@ -1,0 +1,25 @@
+.FileInput {
+  position: relative;
+  display: flex;
+
+  .Input {
+    display: none;
+  }
+}
+
+.FileInputButton {
+  width: 100%;
+
+  &[data-placeholder='true'] {
+    color: rgba(var(--color-foreground) / 0.5);
+  }
+}
+
+.FileInputCloseIcon.Button {
+  position: absolute;
+  top: 50%;
+  right: 1px;
+  transform: translateY(-50%);
+  width: calc(var(--size) - 2px);
+  height: calc(var(--size) - 2px);
+}

@@ -1,4 +1,4 @@
-import { RedisForm } from '@/client/components/RedisForm'
+import { RedisForm } from '@/client/components/Redis/RedisForm'
 import { Box } from '@/client/components/ui/Box'
 import { Button } from '@/client/components/ui/Button'
 import { Card } from '@/client/components/ui/Card'

@@ -9,6 +9,7 @@ import { FormField } from '@/client/components/ui/Form'
 import { sendRequest } from '@/client/utils/invoke'
 import { queryConnections } from '@/client/stores/appStore'
 import s from './index.module.scss'
+import { RedisSSLSwitch } from './RedisSSLSwitch'
 
 interface RedisFormData {
   id?: string
@@ -124,7 +125,7 @@ export const RedisForm: React.FC<RedisFormProps> = ({
 
   return (
     <Box display="flex" flexDirection="column" gap="var(--spacing-md)">
-      <Box className={s.redisForm} gap="var(--spacing-md)">
+      <Box className={s.RedisForm} gap="var(--spacing-md)">
         <FormField name="host" label="Host">
           <Input
             value={values.host}
@@ -163,6 +164,10 @@ export const RedisForm: React.FC<RedisFormProps> = ({
             }}
             placeholder="PASSWORD"
           />
+        </FormField>
+
+        <FormField name="ssl" label="SSL">
+          <RedisSSLSwitch />
         </FormField>
       </Box>
       <Box
