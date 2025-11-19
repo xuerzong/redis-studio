@@ -7,7 +7,7 @@ import s from './index.module.scss'
 export const RootLayout = () => {
   const navigate = useNavigate()
   return (
-    <Box className={s.Layout}>
+    <>
       <Box as="header" className={s.Header}>
         <Box
           fontSize="1rem"
@@ -43,6 +43,6 @@ export const RootLayout = () => {
       <Box className={s.Content}>
         <Outlet />
       </Box>
-    </Box>
+    </>
   )
 }

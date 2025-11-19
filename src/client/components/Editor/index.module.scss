@@ -23,5 +23,20 @@
     .cm-focused {
       outline: none;
     }
+    .cm-gutters {
+      background-color: var(--background-color);
+      color: var(--foreground-color);
+      border-color: var(--border-color);
+    }
+    .cm-activeLine {
+      background-color: var(--muted-color);
+    }
+    .cm-activeLineGutter {
+      background-color: var(--muted-color);
+    }
+
+    .cm-cursor {
+      border-left-color: var(--foreground-color);
+    }
   }
 }
