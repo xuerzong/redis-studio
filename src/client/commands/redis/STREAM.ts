@@ -1,25 +1,4 @@
 import { sendCommand } from '@/client/utils/invoke'
-import z from 'zod'
-
-const STREAMDataSchema = z.object({
-  id: z.string().optional(),
-  value: z
-    .string()
-    .min(1)
-    .refine((input) => {
-      try {
-        JSON.parse(input)
-        return true
-      } catch {
-        return false
-      }
-    }),
-})
-
-interface STREAMData {
-  key: string
-  value: string
-}
 
 export const getSTREAMData = async (id: string, key: string) => {
   const [[_, data]] = await sendCommand<[[string, [string, string[]][]]]>({
