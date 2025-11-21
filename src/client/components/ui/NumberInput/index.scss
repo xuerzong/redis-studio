@@ -4,8 +4,10 @@
   align-items: center;
 
   .NumberInput {
+    position: relative;
     flex: 1;
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    z-index: 1;
   }
 }
 
