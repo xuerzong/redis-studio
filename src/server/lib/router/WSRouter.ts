@@ -63,7 +63,7 @@ export class WSRouter {
 
         if (result) {
           const params = result.params
-          const query = {}
+          const query: TQuery = {}
           urlObj.searchParams.forEach((value, key) => {
             query[key] = value
           })

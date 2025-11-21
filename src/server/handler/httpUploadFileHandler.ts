@@ -12,7 +12,7 @@ const UPLOAD_DIR = path.resolve(
 )
 
 export const httpUploadFileHandler: BaseHandlerFunc =
-  (next: HandlerFunc) => async (req, res) => {
+  (next?: HandlerFunc) => async (req, res) => {
     if (req.url === '/upload' && req.method === 'POST') {
       await ensureDir(UPLOAD_DIR)
       try {
@@ -45,7 +45,7 @@ export const httpUploadFileHandler: BaseHandlerFunc =
 
         if (uploadedFile) {
           const oldPath = uploadedFile.filepath
-          const newFileName = uploadedFile.originalFilename
+          const newFileName = uploadedFile.originalFilename!
           const newPath = path.resolve(UPLOAD_DIR, newFileName)
           await fs.rename(oldPath, newPath)
           return json(res, { url: newPath })
@@ -55,5 +55,5 @@ export const httpUploadFileHandler: BaseHandlerFunc =
       }
     }
 
-    return next(req, res)
+    return next?.(req, res)
   }

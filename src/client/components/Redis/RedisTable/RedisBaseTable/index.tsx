@@ -55,7 +55,6 @@ export const RedisTableViewer: React.FC<RedisBaseTableProps> = ({
   const [formValues, setFormValues] = useState<any>(defaultFormValues)
   const [addOpen, setAddOpen] = useState(false)
   const [delOpen, setDelOpen] = useState(false)
-  const [delRow, setDelRow] = useState<any>(null)
   const [delLoading, setDelLoading] = useState(false)
 
   useEffect(() => {
@@ -101,7 +100,6 @@ export const RedisTableViewer: React.FC<RedisBaseTableProps> = ({
               <IconButton
                 variant="ghost"
                 onClick={() => {
-                  setDelRow(record)
                   setFormValues(record || defaultFormValues)
                   setDelOpen(true)
                 }}

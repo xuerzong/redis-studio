@@ -1,13 +1,8 @@
-import { useState } from 'react'
-import { toast } from 'sonner'
 import { Box } from '@/client/components/ui/Box'
 import {
-  changeSelectedKey,
-  queryRedisKeys,
   queryRedisViewerState,
   useRedisStore,
 } from '@/client/stores/redisStore'
-import { delKey } from '@/client/commands/redis'
 import { useRedisId } from '@/client/hooks/useRedisId'
 import {
   RedisKeyViewerProvider,

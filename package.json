@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev tsx ./src/dev.ts",
-    "build:client": " vite build",
+    "build:client": "tsc -p ./tsconfig.app.json && vite build",
     "build:server": "node ./scripts/build-server.mjs",
     "build:cli": "node ./scripts/build-cli.mjs",
     "build": "npm-run-all build:*",

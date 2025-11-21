@@ -1,4 +1,4 @@
-import { BaseHandlerFunc } from './types'
+import type { BaseHandlerFunc } from './types'
 import fs from 'node:fs/promises'
 import { ok, serverError } from '@/server/lib/response'
 import { HTML_PATH } from '@/server/constants/path'
