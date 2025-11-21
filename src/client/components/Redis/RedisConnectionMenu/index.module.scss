@@ -1,0 +1,31 @@
+.Instance {
+  --border-color: transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  padding: var(--spacing-md);
+  border: 1px dashed var(--border-color);
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+  color: var(--foreground-color);
+
+  &:hover {
+    background-color: var(--muted-color);
+  }
+
+  &[data-active='true'] {
+    background-color: var(--muted-color);
+  }
+
+  &[data-selected='true'] {
+    --border-color: var(--primary-color);
+  }
+
+  .InstanceIcon {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}

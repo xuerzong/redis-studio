@@ -5,24 +5,29 @@
   padding: 0.25rem;
   overflow: hidden;
   border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  outline: none;
 }
 
 .ContextMenuItem {
+  --color: var(--foreground-color);
+  --bg-color: var(--muted-color);
+  --hover-bg-color: var(--bg-color);
   font-size: 0.875rem;
-  color: var(--foreground-color);
+  color: var(--color);
   display: flex;
   align-items: center;
   height: 2.5rem;
   position: relative;
-  padding: 0 1rem;
+  padding: 0 var(--spacing-md);
   user-select: none;
   outline: none;
   cursor: pointer;
-  gap: 0.5rem;
+  gap: var(--spacing-md);
   transition: all 0.1s ease-in;
 
   &:hover {
-    background-color: var(--muted-color);
+    background-color: var(--bg-color);
   }
 }
 
