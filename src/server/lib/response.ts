@@ -10,6 +10,11 @@ export const ok = (
   headers: http.OutgoingHttpHeaders = {}
 ) => {
   res.writeHead(200, headers)
+  res.end(content)
+}
+
+export const json = (res: Resp, content?: any) => {
+  res.writeHead(200, { 'content-type': 'application/json' })
   res.end(typeof content === 'object' ? JSON.stringify(content) : content)
 }
 

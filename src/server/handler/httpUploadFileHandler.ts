@@ -1,6 +1,6 @@
 import type { BaseHandlerFunc, HandlerFunc } from './types'
 import formidable from 'formidable'
-import { notFound, ok, serverError } from '@/server/lib/response'
+import { json, notFound, serverError } from '@/server/lib/response'
 import path from 'node:path'
 import fs from 'node:fs/promises'
 import { dirname } from '@/utils/dirname'
@@ -48,11 +48,7 @@ export const httpUploadFileHandler: BaseHandlerFunc =
           const newFileName = uploadedFile.originalFilename
           const newPath = path.resolve(UPLOAD_DIR, newFileName)
           await fs.rename(oldPath, newPath)
-          return ok(
-            res,
-            { url: newPath },
-            { 'content-type': 'application/json' }
-          )
+          return json(res, { url: newPath })
         }
       } catch (e: any) {
         return serverError(res, e.message)
