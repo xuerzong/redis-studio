@@ -1,6 +1,6 @@
 {
   "name": "@xuerzong/redis-studio",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This is a lightweight Redis Manager.",
   "main": "index.js",
   "scripts": {
