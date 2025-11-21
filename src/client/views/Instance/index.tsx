@@ -18,7 +18,7 @@ import { RedisKeyViewer } from '@/client/components/Redis/RedisKeyViewer'
 import { Loader } from '@/client/components/Loader'
 import { RedisKeyCreateForm } from '@/client/components/RedisKeyForm'
 import { RedisKeySearchInput } from '@/client/components/Redis/RedisKeySearchInput'
-import { RedisDeleteModal } from '@/client/components/Redis/RedisDeleteModal'
+import { RedisDeleteModal } from '@/client/components/Redis/RedisConnectionDeleteModal'
 import {
   changeKeysCountLimit,
   changeRedisId,

@@ -1,4 +1,5 @@
 @import url('./assets/fonts/index.css');
+@import url('./colors.css');
 
 :root {
   --primary-color: rgba(var(--color-primary) / 1);
@@ -17,6 +18,15 @@
 
   --spacing-md: 0.5rem;
   --header-height: 4rem;
+
+  --success-color: rgba(var(--color-success) / 1);
+  --success-bg-color: rgba(var(--color-success-bg) / 1);
+
+  --warning-color: rgba(var(--color-warning) / 1);
+  --warning-bg-color: rgba(var(--color-warning-bg) / 1);
+
+  --danger-color: rgba(var(--color-danger) / 1);
+  --danger-bg-color: rgba(var(--color-danger-bg) / 1);
 }
 
 :root {
@@ -27,6 +37,13 @@
   --color-muted: 220 220 220;
   --color-foreground: 0 0 0;
   --color-border: 230 230 230;
+
+  --color-success: var(--color-green-600);
+  --color-success-bg: var(--color-green-100);
+  --color-warning: var(--color-yellow-600);
+  --color-warning-bg: var(--color-yellow-100);
+  --color-danger: var(--color-red-600);
+  --color-danger-bg: var(--color-red-100);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,12 +57,34 @@
     --color-foreground: 255 255 255;
 
     --color-border: 38 38 38;
+
+    --color-success: var(--color-green-600);
+    --color-success-bg: var(--color-green-950);
+    --color-warning: var(--color-yellow-600);
+    --color-warning-bg: var(--color-yellow-950);
+    --color-danger: var(--color-red-600);
+    --color-danger-bg: var(--color-red-950);
   }
 }
 
 [data-sonner-toast] {
   --border-radius: 0px;
   border-radius: var(--border-radius);
+}
+
+[data-color-palette='success'] {
+  --color: var(--success-color) !important;
+  --bg-color: var(--success-bg-color) !important;
+}
+
+[data-color-palette='warning'] {
+  --color: var(--warning-color) !important;
+  --bg-color: var(--warning-bg-color) !important;
+}
+
+[data-color-palette='danger'] {
+  --color: var(--danger-color) !important;
+  --bg-color: var(--danger-bg-color) !important;
 }
 
 * {

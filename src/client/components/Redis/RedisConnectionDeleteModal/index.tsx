@@ -6,17 +6,15 @@ import { Modal } from '@/client/components/ui/Modal'
 import { queryConnections } from '@/client/stores/appStore'
 import { delConnection } from '@/client/commands/api/connections'
 
-interface RedisDeleteModalProps {
+interface RedisConnectionDeleteModalProps {
   open?: boolean
   onOpenChange?: (open: boolean) => void
   redisId: string
 }
 
-export const RedisDeleteModal: React.FC<RedisDeleteModalProps> = ({
-  open,
-  onOpenChange,
-  redisId,
-}) => {
+export const RedisConnectionDeleteModal: React.FC<
+  RedisConnectionDeleteModalProps
+> = ({ open, onOpenChange, redisId }) => {
   const navigate = useNavigate()
   return (
     <Modal
