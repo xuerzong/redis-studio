@@ -4,7 +4,6 @@
   "description": "This is a lightweight Redis Manager.",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev tsx ./src/dev.ts",
     "start": "npm run dev --workspace=app",
     "build:app": "npm run build --workspace=app",
     "build:cli": "npm run build --workspace=cli",
