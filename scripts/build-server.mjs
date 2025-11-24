@@ -7,7 +7,7 @@ const main = () => {
   build({
     entryPoints: [path.resolve(rootDir, 'src', 'index.ts')],
     bundle: true,
-    minify: false,
+    minify: true,
     outfile: path.resolve(rootDir, 'dist', 'server.js'),
     format: 'cjs',
     platform: 'node',
