@@ -12,7 +12,7 @@
     "copy:readme": "cp README.md ./cli",
     "clean:cli": "rimraf ./cli/dist",
     "clean:app": "rimraf ./app/dist",
-    "publish:cli": "npm publish --wrokspace=cli",
+    "publish:cli": "npm publish --workspace=cli",
     "format": "prettier --write .",
     "release": "npm-run-all build copy:*"
   },
