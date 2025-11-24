@@ -1,5 +1,4 @@
 import { SearchIcon } from 'lucide-react'
-import { useDebouncedCallback } from 'use-debounce'
 import { redisKeyTypes } from '@/constants/redisKeyTypes'
 import { Select } from '@client/components/ui/Select'
 import { useRedisKeysContext } from '@client/providers/RedisKeysContext'
@@ -12,8 +11,6 @@ export const RedisKeySearchInput = () => {
     { label: 'ALL', value: 'all' },
     ...redisKeyTypes.map((type) => ({ label: type, value: type })),
   ]
-
-  const debouncedSetSearchValue = useDebouncedCallback(setSearchValue, 500)
 
   return (
     <div className={s.RedisKeySearch}>
@@ -32,7 +29,7 @@ export const RedisKeySearchInput = () => {
         <input
           value={searchValue}
           onChange={(e) => {
-            debouncedSetSearchValue(e.target.value)
+            setSearchValue(e.target.value)
           }}
           className={s.RedisKeySearchInput}
           placeholder="Filter by Key Name and Pattern "

@@ -4,6 +4,7 @@ import { TreeNode, keysToTree } from '../utils/tree'
 import { getKeys } from '../commands/redis'
 import { useRedisId } from '../hooks/useRedisId'
 import { changeRedisKeys, useRedisStore } from '../stores/redisStore'
+import { useDebounce } from 'use-debounce'
 
 export const viewModes = ['list', 'tree'] as const
 
@@ -49,7 +50,9 @@ export const RedisKeysProvider: React.FC<React.PropsWithChildren> = ({
   const [loading, setLoading] = useState(false)
   const redisKeys = useRedisStore((state) => state.redisKeys)
 
-  const queryRedisKeys = (
+  const [debouncedSearchValue] = useDebounce(searchValue, 500)
+
+  const queryRedisKeys = async (
     redisId: string,
     params?: { match?: string; count?: number }
   ) => {
@@ -65,8 +68,8 @@ export const RedisKeysProvider: React.FC<React.PropsWithChildren> = ({
   }
 
   useEffect(() => {
-    queryRedisKeys(redisId, { match: searchValue })
-  }, [redisId, searchValue])
+    queryRedisKeys(redisId, { match: debouncedSearchValue })
+  }, [redisId, debouncedSearchValue])
 
   const keyTreeNodes = useMemo(() => {
     const filteredKeys = (redisKeys || [])
