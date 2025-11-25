@@ -51,6 +51,7 @@ const stylePropertyKeys = [
   'textAlign',
 
   'color',
+  'lineHeight',
   'backgroundColor',
   'opacity',
   'pointerEvents',
@@ -85,11 +86,13 @@ type BoxProps<Root extends React.ElementType = DefaultElement> =
   React.ComponentPropsWithoutRef<Root> &
     Omit<BoxOwnProps, 'as'> &
     BoxOwnProps &
-    StyleProperties
+    StyleProperties & {
+      colorPalette?: 'success' | 'warning' | 'danger'
+    }
 
 const BoxComponent = React.forwardRef(
   <T extends React.ElementType = DefaultElement>(
-    { as = 'div', children, ...restProps }: BoxProps<T>,
+    { as = 'div', children, colorPalette, ...restProps }: BoxProps<T>,
     ref: React.Ref<any>
   ) => {
     const Component = as
@@ -100,7 +103,12 @@ const BoxComponent = React.forwardRef(
     const mergedProps = mergeProps(componentProps, { style: styleProps })
 
     return (
-      <Component ref={ref} {...mergedProps}>
+      <Component
+        ref={ref}
+        {...mergedProps}
+        {...(Boolean(colorPalette) && { 'data-color-palette': colorPalette })}
+        data-box
+      >
         {children}
       </Component>
     )
