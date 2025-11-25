@@ -1,7 +1,5 @@
 <p align="center"><img src="./assets/hero.png" ></p>
 
-<p align="center">This is a lightweight Redis Manager.</p>
-
 <p align="center">
   <a href="https://github.com/xuerzong/redis-studio/blob/main/LICENSE">
     <img  src="https://img.shields.io/github/license/xuerzong/redis-studio?style=for-the-badge&color=52e892" alt="github">
@@ -16,19 +14,77 @@
   </a>
 </p>
 
-## Get Started
+🚀 **Redis Studio** is a lightweight(<2MB), cross-platform Redis GUI (Graphical User Interface) Client. Redis Studio is designed to provide a simple and efficient way to manage and monitor your Redis instances.
+
+## ✨ Features
+
+- [x] **Multi-Connection Support:** Easily manage and switch between multiple Redis instances.
+
+- [x] **Intuitive Key Browser:** Browse, search, edit, and delete various data types (String, List, Hash, Set, ZSet).
+
+- [x] **Cross-Platform:** Supports Windows, macOS, and Linux.
+
+## 🚀 Get Started
+
+### Install
+
+You can install the Redis Studio command-line tool globally via npm (Node Package Manager).
 
 ```bash
 npm -g @xuerzong/redis-studio
+```
 
+### Start Server
+
+> [!NOTE]
+> Redis Studio runs as a standalone application, and its server provides the web interface. You still require a running Redis instance to connect to and manage your data.
+
+After installation, use the `rds` command to manage the background service for Redis Studio.
+
+- Check Version
+
+```bash
 rds --version # OR `rds -V`
+```
 
-# Start
+- Start Service
+
+```bash
 rds start
+```
 
-# Stop
+- Stop Service
+
+```bash
 rds stop
+```
 
-# Restart
+- Restart Service
+
+```bash
 rds restart
+```
+
+## 🔨 Configuration
+
+### Default Settgins
+
+By default, the Redis Studio service runs on port `5090` on localhost.
+
+### Custom Port
+
+You can specify a different port using a command-line flag when starting the service:
+
+```bash
+rds start --port 9000
+```
+
+## 💻 How To Dev
+
+```bash
+cd ./redis-studio
+
+npm install
+
+npm run start
 ```
