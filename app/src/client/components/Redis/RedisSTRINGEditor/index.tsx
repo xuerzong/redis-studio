@@ -26,7 +26,7 @@ export const RedisSTRINGEditor = () => {
         return 'Update Data Failed'
       },
       finally() {
-        setLoading(true)
+        setLoading(false)
       },
     })
   }

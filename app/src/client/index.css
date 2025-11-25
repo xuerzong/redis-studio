@@ -19,6 +19,9 @@
   --spacing-md: 0.5rem;
   --header-height: 4rem;
 
+  --color: var(--foreground-color);
+  --bg-color: transparent;
+
   --success-color: rgba(var(--color-success) / 1);
   --success-bg-color: rgba(var(--color-success-bg) / 1);
 
@@ -106,6 +109,11 @@
 * {
   box-sizing: border-box;
   border-color: var(--border-color);
+}
+
+[data-box] {
+  background-color: var(--bg-color);
+  color: var(--color);
 }
 
 html,

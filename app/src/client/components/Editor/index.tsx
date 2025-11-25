@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { FilesIcon } from 'lucide-react'
+import { FilesIcon, XCircleIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import copy from 'copy-to-clipboard'
 import { basicSetup, EditorView } from 'codemirror'
@@ -22,6 +22,7 @@ export const Editor: React.FC<EditorProps> = ({ value, onChange }) => {
   const editorRef = useRef<HTMLDivElement>(null)
   const [language, setLanguage] = useState('plaintext')
   const [hasFocused, setHasFocused] = useState(false)
+  const [editorError, setEditorError] = useState('')
   const options = [
     {
       label: 'PlainText',
@@ -33,12 +34,39 @@ export const Editor: React.FC<EditorProps> = ({ value, onChange }) => {
     },
   ]
 
+  const editorValue = useMemo(() => {
+    if (!value) {
+      return value
+    }
+    setEditorError('')
+    if (language === 'json') {
+      try {
+        return JSON.stringify(JSON.parse(value), null, 2)
+      } catch (e: any) {
+        setEditorError(e.message)
+      }
+    }
+
+    if (language === 'plaintext') {
+      try {
+        return JSON.stringify(JSON.parse(value))
+      } catch (e: any) {
+        return value
+      }
+    }
+    return value
+  }, [language, value])
+
   const editorState = useMemo(() => {
     const updateListener = Prec.highest(
       EditorView.updateListener.of((update) => {
         if (update.docChanged && onChange) {
           const newValue = update.state.doc.toString()
-          onChange(newValue)
+          try {
+            onChange(JSON.stringify(JSON.parse(newValue)))
+          } catch {
+            onChange(newValue)
+          }
         }
       })
     )
@@ -49,11 +77,14 @@ export const Editor: React.FC<EditorProps> = ({ value, onChange }) => {
         EditorView.domEventHandlers({
           focus: () => setHasFocused(true),
           blur: () => setHasFocused(false),
+          select: (e) => {
+            console.log(e)
+          },
         }),
         updateListener,
       ],
     })
-  }, [])
+  }, [language])
 
   useEffect(() => {
     const view = new EditorView({
@@ -61,6 +92,7 @@ export const Editor: React.FC<EditorProps> = ({ value, onChange }) => {
       state: editorState,
       parent: editorRef.current!,
     })
+
     editorViewerRef.current = view
 
     return () => {
@@ -73,17 +105,17 @@ export const Editor: React.FC<EditorProps> = ({ value, onChange }) => {
     if (editorViewer) {
       const currentDoc = editorViewer.state.doc.toString()
 
-      if (value !== currentDoc) {
+      if (editorValue !== currentDoc) {
         editorViewer.dispatch({
           changes: {
             from: 0,
             to: editorViewer.state.doc.length,
-            insert: value,
+            insert: editorValue,
           },
         })
       }
     }
-  }, [value])
+  }, [editorValue])
 
   useEffect(() => {
     editorViewerRef.current?.dispatch({
@@ -106,7 +138,7 @@ export const Editor: React.FC<EditorProps> = ({ value, onChange }) => {
   }
 
   return (
-    <Box display="flex" flexDirection="column" gap="0.5rem">
+    <Box position="relative" display="flex" flexDirection="column" gap="0.5rem">
       <Box display="flex" gap="0.5rem">
         <Box width="10rem">
           <Select
@@ -120,6 +152,23 @@ export const Editor: React.FC<EditorProps> = ({ value, onChange }) => {
         </IconButton>
       </Box>
       <Box className={s.Editor} ref={editorRef} data-focused={hasFocused} />
+      <Box
+        position="absolute"
+        display={editorError ? 'flex' : 'none'}
+        alignItems="flex-start"
+        gap="0.25rem"
+        bottom={0}
+        left={0}
+        zIndex={1}
+        colorPalette="danger"
+        width="100%"
+        padding="0.5rem"
+        fontSize="0.75rem"
+        lineHeight="1rem"
+      >
+        <XCircleIcon className={s.EditorErrorIcon} />
+        {editorError}
+      </Box>
     </Box>
   )
 }
