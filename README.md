@@ -18,6 +18,10 @@
 
 🚀 **Redis Studio** is a lightweight(<2MB), cross-platform Redis GUI (Graphical User Interface) Client. Redis Studio is designed to provide a simple and efficient way to manage and monitor your Redis instances.
 
+<p align='center'>
+  <img src='./assets/screenshot.png'>
+</p>
+
 ## ✨ Features
 
 - [x] **Multi-Connection Support:** Easily manage and switch between multiple Redis instances.

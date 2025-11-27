@@ -16,6 +16,10 @@
 
 🚀 **Redis Studio** 是一个轻量级（<2MB）、跨平台的 Redis GUI（图形用户界面）客户端。Redis Studio 旨在提供一种简单高效的方式来管理和监控您的 Redis 实例。
 
+<p align='center'>
+  <img src='./assets/screenshot.png'>
+</p>
+
 ## ✨ 特性
 
 - [x] **多连接支持:** 轻松管理和切换多个 Redis 实例。
