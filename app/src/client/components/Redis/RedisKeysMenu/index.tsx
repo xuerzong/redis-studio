@@ -12,28 +12,29 @@ export const RedisKeysMenuRoot = () => {
   const { setSelectedKey } = useRedisContext()
   const { keyTreeNodes, loading: redisKeysLoading } = useRedisKeysContext()
   return (
-    <Box
-      position="relative"
-      overflowY="auto"
-      overscrollBehavior="none"
-      height="100%"
-    >
+    <Box position="relative" height="100%">
       <Box
-        position="sticky"
-        top={0}
-        backgroundColor="var(--background-color)"
-        borderBottom="1px solid var(--border-color)"
-        zIndex={1}
+        position="relative"
+        overflowY="auto"
+        overscrollBehavior="none"
+        height="100%"
       >
-        <RedisKeysTreeToolbar />
+        <Box
+          position="sticky"
+          top={0}
+          backgroundColor="var(--background-color)"
+          borderBottom="1px solid var(--border-color)"
+          zIndex={1}
+        >
+          <RedisKeysTreeToolbar />
+        </Box>
+        <RedisKeysTree
+          nodes={keyTreeNodes}
+          onSelect={(key) => {
+            setSelectedKey(key)
+          }}
+        />
       </Box>
-      <RedisKeysTree
-        nodes={keyTreeNodes}
-        onSelect={(key) => {
-          setSelectedKey(key)
-        }}
-      />
-
       <LoaderMask loading={redisKeysLoading} />
     </Box>
   )
