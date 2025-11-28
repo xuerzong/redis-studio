@@ -1,11 +1,12 @@
-.Header {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-  height: var(--header-height);
-  padding: 0 1rem;
+.RootLayout {
+  --sider-size: 3rem;
 }
 
-.Content {
-  height: calc(100vh - var(--header-height));
+.RootMenu {
+  :global {
+    .Button {
+      --size: var(--sider-size);
+      --svg-size: 1.25rem;
+    }
+  }
 }
