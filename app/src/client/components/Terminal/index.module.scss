@@ -8,7 +8,7 @@
     }
 
     .xterm-cursor {
-      transition: all 0.5s ease-in !important;
+      transition: all var(--transition-duration) ease-in !important;
     }
   }
 }

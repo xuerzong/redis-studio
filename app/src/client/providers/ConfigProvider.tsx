@@ -41,6 +41,8 @@ export const ConfigProvider: React.FC<React.PropsWithChildren> = ({
   }, [config])
 
   useEffect(() => {
+    document.documentElement.style.setProperty('--transition-duration', '0s')
+
     if (theme === 'dark') {
       document.documentElement.classList.remove('light')
       document.documentElement.classList.add('dark')
@@ -53,6 +55,12 @@ export const ConfigProvider: React.FC<React.PropsWithChildren> = ({
       document.documentElement.style.colorScheme = 'light'
     }
 
+    setTimeout(() => {
+      document.documentElement.style.setProperty(
+        '--transition-duration',
+        '0.3s'
+      )
+    })
     localStorage.setItem('rds-theme', theme)
   }, [theme])
 

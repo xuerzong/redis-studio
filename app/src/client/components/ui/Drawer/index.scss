@@ -35,7 +35,7 @@
   position: fixed;
   inset: 0;
   z-index: 9998;
-  transition: all 0.1s ease-in;
+  transition: all var(--transition-duration) ease-in;
   opacity: 1;
   backdrop-filter: blur(4px);
   &[data-starting-style],
@@ -56,7 +56,7 @@
   border-left: 1px solid var(--border-color);
   border-radius: var(--border-radius) 0 0 var(--border-radius);
   transform: translateX(0);
-  transition: all 0.1s ease-in;
+  transition: all var(--transition-duration) ease-in;
   &[data-starting-style],
   &[data-ending-style] {
     transform: translateX(100%);

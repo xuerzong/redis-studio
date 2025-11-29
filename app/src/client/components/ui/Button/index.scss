@@ -18,7 +18,7 @@
   padding: 0 1rem;
   cursor: pointer;
   outline: none;
-  transition: all 0.1s ease-in;
+  transition: all var(--transition-duration) ease-in;
 
   &[data-type='icon'] {
     align-items: center;
