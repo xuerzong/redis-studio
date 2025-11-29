@@ -30,7 +30,7 @@ export const RootLayout = () => {
         className={s.RootMenu}
       >
         <IconButton
-          variant="ghost"
+          variant={pathname === '/' ? 'subtle' : 'ghost'}
           onClick={() => {
             navigate('/')
           }}
@@ -41,7 +41,7 @@ export const RootLayout = () => {
         <Box flex={1} />
         <Tooltip content={formatMessage('settings')} placement="right">
           <IconButton
-            variant="ghost"
+            variant={pathname === '/settings' ? 'subtle' : 'ghost'}
             onClick={() => {
               navigate('/settings')
             }}
