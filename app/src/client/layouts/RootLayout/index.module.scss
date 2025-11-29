@@ -5,8 +5,25 @@
 .RootMenu {
   :global {
     .Button {
+      position: relative;
       --size: var(--sider-size);
       --svg-size: 1.25rem;
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        height: calc(100% + 2px);
+        width: 0.25rem;
+      }
+
+      &[data-active='true'] {
+        &::before {
+          background-color: var(--primary-color);
+        }
+      }
     }
   }
 }
