@@ -28,7 +28,7 @@
   outline: none;
   cursor: pointer;
   gap: var(--spacing-md);
-  transition: all 0.1s ease-in;
+  transition: all var(--transition-duration) ease-in;
 
   &:hover {
     background-color: var(--bg-color);

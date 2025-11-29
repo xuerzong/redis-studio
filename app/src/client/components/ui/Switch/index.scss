@@ -9,7 +9,7 @@
   background-color: transparent;
   border: 1px solid var(--border-color);
   border-radius: 1.25rem;
-  transition: all 0.1s ease-in;
+  transition: all var(--transition-duration) ease-in;
   cursor: pointer;
 
   &[data-checked] {
@@ -22,7 +22,7 @@
   height: 100%;
   border-radius: 100%;
   background-color: var(--foreground-color);
-  transition: translate 150ms ease;
+  transition: translate var(--transition-duration) ease;
 
   &[data-checked] {
     translate: 1rem 0;

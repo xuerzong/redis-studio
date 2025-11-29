@@ -8,7 +8,7 @@
   padding: var(--spacing-md);
   border: 1px dashed var(--border-color);
   cursor: pointer;
-  transition: all 0.1s ease-in;
+  transition: all var(--transition-duration) ease-in;
   color: var(--foreground-color);
 
   &:hover {

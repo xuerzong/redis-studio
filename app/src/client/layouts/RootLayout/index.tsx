@@ -1,40 +1,69 @@
-import { Outlet, useNavigate } from 'react-router'
+import { Outlet, useLocation, useNavigate } from 'react-router'
+import { DatabaseIcon, SettingsIcon } from 'lucide-react'
 import { Box } from '@client/components/ui/Box'
-import { IconButton } from '@client/components/ui/Button'
-import { LangSelector } from '@/client/components/LangSelector'
+import { IconButton } from '@/client/components/ui/Button'
 import { GithubIcon } from '@/client/components/Icons/GithubIcon'
+import { Tooltip } from '@/client/components/ui/Tooltip'
+import { useIntlContext } from '@/client/providers/IntlProvider'
 import s from './index.module.scss'
+import { useMemo } from 'react'
 
 export const RootLayout = () => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const pathname = useMemo(() => {
+    if (location.pathname.startsWith('/settings')) {
+      return location.pathname
+    }
+    return '/'
+  }, [location])
+  const { formatMessage } = useIntlContext()
   return (
-    <>
-      <Box as="header" className={s.Header}>
-        <Box
-          fontSize="1rem"
-          fontWeight="bold"
-          cursor="pointer"
+    <Box className={s.RootLayout} display="flex" height="100vh">
+      <Box
+        display="flex"
+        flexDirection="column"
+        flexShrink={0}
+        width="calc(var(--sider-size) + 1px)"
+        height="100%"
+        borderRight="1px solid var(--border-color)"
+        className={s.RootMenu}
+      >
+        <IconButton
+          variant={pathname === '/' ? 'subtle' : 'ghost'}
           onClick={() => {
             navigate('/')
           }}
+          data-active={pathname === '/'}
         >
-          Redis Studio
-        </Box>
-        <Box display="flex" alignItems="center" gap="0.25rem" marginLeft="auto">
-          <LangSelector />
+          <DatabaseIcon />
+        </IconButton>
+        <Box flex={1} />
+        <Tooltip content={formatMessage('settings')} placement="right">
           <IconButton
-            variant="outline"
+            variant={pathname === '/settings' ? 'subtle' : 'ghost'}
             onClick={() => {
-              window.open('https://github.com/xuerzong/redis-studio', '_blank')
+              navigate('/settings')
             }}
+            className={s.RootMenuButton}
+            data-active={pathname === '/settings'}
           >
-            <GithubIcon />
+            <SettingsIcon />
           </IconButton>
-        </Box>
+        </Tooltip>
+
+        <IconButton
+          variant="ghost"
+          onClick={() => {
+            window.open('https://github.com/xuerzong/redis-studio', '_blank')
+          }}
+        >
+          <GithubIcon />
+        </IconButton>
       </Box>
-      <Box className={s.Content}>
+      <Box width="calc(100vw - var(--sider-size) - 1px)" height="100%">
         <Outlet />
       </Box>
-    </>
+    </Box>
   )
 }
