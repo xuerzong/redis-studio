@@ -3,7 +3,7 @@ import { omit, pick } from '@client/utils/object'
 import { mergeProps } from '@client/utils/props'
 import React, { useMemo } from 'react'
 import { Slot } from '@radix-ui/react-slot'
-import { useConfigContext } from '@client/providers/ConfigProvider'
+import { useDisplayTheme } from '@client/providers/ConfigProvider'
 
 const stylePropertyKeys = [
   'position',
@@ -103,8 +103,7 @@ const BoxComponent = React.forwardRef(
     { as = 'div', asChild, children, colorPalette, ...restProps }: BoxProps<T>,
     ref: React.Ref<any>
   ) => {
-    const { config } = useConfigContext()
-    const darkMode = config.theme === 'dark'
+    const displayTheme = useDisplayTheme()
     const Component = asChild ? Slot : as
 
     const colorPaletteVars = useMemo(() => {
@@ -121,7 +120,7 @@ const BoxComponent = React.forwardRef(
             [`--color-palettle-${cur}`]: `var(--color-${_colorPalette}-${cur})`,
           }
         },
-        darkMode
+        displayTheme === 'dark'
           ? {
               '--color': 'rgba(var(--color-palettle-500) / 1)',
               '--bg-color': 'rgba(var(--color-palettle-950) / 1)',
@@ -131,7 +130,7 @@ const BoxComponent = React.forwardRef(
               '--bg-color': 'rgba(var(--color-palettle-100) / 1)',
             }
       )
-    }, [darkMode, colorPalette])
+    }, [displayTheme, colorPalette])
 
     const componentProps = omit(restProps, ...stylePropertyKeys)
     const styleProps = pick(restProps, ...stylePropertyKeys)

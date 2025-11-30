@@ -21,6 +21,18 @@ export const useConfigContext = () => {
   return context
 }
 
+export const useDisplayTheme = () => {
+  const { config } = useConfigContext()
+  const systemDarkMode = useDarkMode()
+
+  return useMemo(() => {
+    if (config.theme === 'system') {
+      return systemDarkMode ? 'dark' : 'light'
+    }
+    return config.theme
+  }, [config, systemDarkMode])
+}
+
 export const ConfigProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
