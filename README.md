@@ -1,18 +1,22 @@
-<p align="center"><img src="./assets/hero.png" ></p>
+<div align="center">
+  <img width='128' height='auto' src="./assets/hero.png" >
+</div>
 
-<p align="center">
-  <a href="https://github.com/xuerzong/redis-studio/blob/main/LICENSE">
-    <img  src="https://img.shields.io/github/license/xuerzong/redis-studio?style=for-the-badge&color=52e892" alt="github">
-  </a>
-  
+---
+
+<div align='center'>
   <a href="https://www.npmjs.com/package/@xuerzong/redis-studio">
     <img  src="https://img.shields.io/npm/v/%40xuerzong%2Fredis-studio?style=for-the-badge" alt="npm version"/>
   </a>
 
   <a href="https://www.npmjs.com/package/@xuerzong/redis-studio">
-  <img src="https://img.shields.io/npm/dw/%40xuerzong%2Fredis-studio?style=for-the-badge" alt="npm downloads"/>
+    <img src="https://img.shields.io/npm/dw/%40xuerzong%2Fredis-studio?style=for-the-badge" alt="npm downloads"/>
   </a>
-</p>
+  
+  <a href="https://github.com/xuerzong/redis-studio/blob/main/LICENSE">
+    <img  src="https://img.shields.io/github/license/xuerzong/redis-studio?style=for-the-badge&color=52e892" alt="github">
+  </a>
+</div>
 
 <p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
 
