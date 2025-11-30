@@ -1,6 +1,8 @@
-<p align="center"><img src="./assets/hero.png" ></p>
+<div align="center" style="padding:32px;">
+  <img width='128' height='auto' src="./assets/hero.png" >
+</div>
 
-<p align="center">
+<div style='display:flex;align-items:center;justify-content:center;'>
   <a href="https://github.com/xuerzong/redis-studio/blob/main/LICENSE">
     <img  src="https://img.shields.io/github/license/xuerzong/redis-studio?style=for-the-badge&color=52e892" alt="github">
   </a>
@@ -12,7 +14,7 @@
   <a href="https://www.npmjs.com/package/@xuerzong/redis-studio">
   <img src="https://img.shields.io/npm/dw/%40xuerzong%2Fredis-studio?style=for-the-badge" alt="npm downloads"/>
   </a>
-</p>
+</div>
 
 <p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
 
