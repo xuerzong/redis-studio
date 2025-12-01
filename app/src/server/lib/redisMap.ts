@@ -1,5 +1,5 @@
 import Redis, { type RedisOptions } from 'ioredis'
-import { safeReadFile } from '@/utils/fs'
+import { safeReadFile } from '@server/utils/fs'
 import type { ConnectionData } from './db/connections'
 import { __DEV__ } from '../utils/env'
 
