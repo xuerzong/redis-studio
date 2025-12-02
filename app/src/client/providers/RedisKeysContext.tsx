@@ -72,6 +72,11 @@ export const RedisKeysProvider: React.FC<React.PropsWithChildren> = ({
   }
 
   useEffect(() => {
+    // Reset Keys When Switching Redis
+    changeRedisKeys([])
+  }, [redisId])
+
+  useEffect(() => {
     queryRedisKeys(redisId, {
       match: debouncedSearchValue,
       count: keysCountLimit,
