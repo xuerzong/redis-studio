@@ -3,7 +3,7 @@ import formidable from 'formidable'
 import { json, notFound, serverError } from '@server/lib/response'
 import path from 'node:path'
 import fs from 'node:fs/promises'
-import { ensureDir } from '@/utils/fs'
+import { ensureDir } from '@server/utils/fs'
 import { CACHE_PATH } from '../constants/path'
 
 const UPLOAD_DIR = path.resolve(CACHE_PATH, 'uploads')

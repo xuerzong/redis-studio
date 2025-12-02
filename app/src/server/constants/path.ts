@@ -1,6 +1,6 @@
 import path from 'node:path'
 import os from 'node:os'
-import { dirname } from '@/utils/dirname'
+import { dirname } from '@server/utils/dirname'
 
 export const CLIENT_PATH = path.resolve(dirname)
 

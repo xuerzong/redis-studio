@@ -2,10 +2,11 @@ import { Server as HttpServer } from 'node:http'
 import { WebSocketServer } from 'ws'
 import { Server as HTTPSServer } from 'https'
 import picocolors from 'picocolors'
-import { logger } from '@/utils/logger'
-import { redisMap } from '@server/lib/redisMap'
+import logger from '@server/lib/logger'
+import redisMap from '@server/lib/redisMap'
 import { connectionDb } from '@server/lib/db'
 import { apiRouter } from '@server/router'
+import { __DEV__ } from './server/utils/env'
 
 const { bgGreen, white } = picocolors
 
@@ -35,13 +36,11 @@ const onWebsockerEvent = async ({
         return
       }
       const redisInstance = await redisMap.getInstance(connection)
-      const redisInstanceStatus = redisMap.getInstanceStatus(connection)
-
       // No Ready Yet
-      if (redisInstanceStatus !== 1) {
+      if (redisInstance.status !== 1) {
         return
       }
-      response = await redisInstance.call(command, ...args)
+      response = await redisInstance.redis.call(command, ...args)
       break
     }
     default:
@@ -55,11 +54,13 @@ export const useWebsocketServer = (server: HttpServer | HTTPSServer) => {
   wss.on('connection', (ws) => {
     logger.log('Websocket connect successfully')
     ws.on('message', async (message) => {
-      logger.log(
-        bgGreen(white('====== Websocket Message ======')),
-        '\n',
-        JSON.stringify(JSON.parse(message.toString()), null, 2)
-      )
+      if (__DEV__) {
+        logger.log(
+          bgGreen(white('====== Websocket Message ======')),
+          '\n',
+          JSON.stringify(JSON.parse(message.toString()), null, 2)
+        )
+      }
       const { type, data, requestId } = JSON.parse(message.toString())
       try {
         const resp = await onWebsockerEvent({ type, data, requestId })

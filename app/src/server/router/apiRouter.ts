@@ -1,6 +1,6 @@
 import { WSRouter } from '@server/lib/router'
 import { connectionDb } from '@server/lib/db'
-import { redisMap } from '@server/lib/redisMap'
+import redisMap from '@server/lib/redisMap'
 import { getConfig, setConfig } from '@server/services/config'
 import type { Config } from '@/types'
 
@@ -15,8 +15,8 @@ router.get('/api/connections/status', async (req) => {
   const connection = await connectionDb.find(id)
   if (!connection) return -1
   // To init the redis instance
-  await redisMap.getInstance(connection)
-  return redisMap.getInstanceStatus(connection)
+  const redisInstance = await redisMap.getInstance(connection)
+  return redisInstance.status
 })
 
 router.post('/api/connections', async (req) => {
