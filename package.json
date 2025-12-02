@@ -14,7 +14,9 @@
     "clean:app": "rimraf ./app/dist",
     "publish:cli": "npm publish --workspace=cli",
     "format": "prettier --write .",
-    "release": "npm-run-all build copy:*"
+    "release": "npm-run-all build copy:*",
+    "prepare": "husky",
+    "lint": "lint-staged"
   },
   "workspaces": [
     "cli",
@@ -27,6 +29,8 @@
   "devDependencies": {
     "@types/node": "^24.2.0",
     "esbuild": "^0.25.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.6.2",
     "rimraf": "^6.1.2",
