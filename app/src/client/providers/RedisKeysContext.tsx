@@ -61,11 +61,17 @@ export const RedisKeysProvider: React.FC<React.PropsWithChildren> = ({
     params?: { match?: string; count?: number }
   ) => {
     setLoading(true)
+    const currentRedisId = redisId
     return getKeys(redisId, {
       ...{ match: searchValue, count: keysCountLimit },
       ...params,
     })
-      .then(changeRedisKeys)
+      .then((keys) => {
+        // Prevent race condition in queryRedisKeys
+        if (currentRedisId === redisId) {
+          changeRedisKeys(keys)
+        }
+      })
       .finally(() => {
         setLoading(false)
       })
