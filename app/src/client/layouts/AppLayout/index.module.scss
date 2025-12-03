@@ -1,8 +1,5 @@
 .Layout {
   --sider-width: 15rem;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
   height: 100%;
 }
 
@@ -18,6 +15,10 @@
   flex-shrink: 0;
   width: var(--sider-width);
   border-right: 1px solid var(--border-color);
+
+  &[data-panel-size='0.0'] {
+    border-right: 0;
+  }
 }
 
 .Content {

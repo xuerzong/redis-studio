@@ -1,14 +1,17 @@
 import { Outlet, useLocation, useNavigate } from 'react-router'
 import { DatabaseIcon, SettingsIcon } from 'lucide-react'
 import { Box } from '@client/components/ui/Box'
-import { IconButton } from '@/client/components/ui/Button'
-import { GithubIcon } from '@/client/components/Icons/GithubIcon'
-import { Tooltip } from '@/client/components/ui/Tooltip'
-import { useIntlContext } from '@/client/providers/IntlProvider'
-import s from './index.module.scss'
+import { IconButton } from '@client/components/ui/Button'
+import { GithubIcon } from '@client/components/Icons/GithubIcon'
+import { Tooltip } from '@client/components/ui/Tooltip'
+import { useIntlContext } from '@client/providers/IntlProvider'
 import { useMemo } from 'react'
+import { useRedisId } from '@client/hooks/useRedisId'
+import { changeConnectionsCollapsed } from '@client/stores/appStore'
+import s from './index.module.scss'
 
 export const RootLayout = () => {
+  const redisId = useRedisId()
   const navigate = useNavigate()
   const location = useLocation()
   const pathname = useMemo(() => {
@@ -32,7 +35,11 @@ export const RootLayout = () => {
         <IconButton
           variant={pathname === '/' ? 'subtle' : 'ghost'}
           onClick={() => {
-            navigate('/')
+            if (redisId) {
+              changeConnectionsCollapsed(false)
+            } else {
+              navigate('/')
+            }
           }}
           data-active={pathname === '/'}
         >
