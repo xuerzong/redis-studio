@@ -99,7 +99,11 @@ export const getSystemConfig = async () => {
 }
 
 export const setSystemConfig = async (config: any) => {
-  await writeFile(systemConfigPath, config, {
-    baseDir: BaseDirectory.Home,
-  })
+  await writeFile(
+    systemConfigPath,
+    new TextEncoder().encode(JSON.stringify(config)),
+    {
+      baseDir: BaseDirectory.Home,
+    }
+  )
 }
