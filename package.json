@@ -25,7 +25,8 @@
     "cli",
     "app",
     "desktop",
-    "packages/*"
+    "packages/*",
+    "web"
   ],
   "private": true,
   "author": "xuerzong@gmail.com",
