@@ -5,11 +5,15 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { router } from './router'
 import { IntlProvider } from './providers/IntlProvider'
 import { ConfigProvider } from './providers/ConfigProvider'
+import { disableContextMenu } from './utils/contextmenu'
 import '@xuerzong/redis-studio-invoke/init'
+
 import 'normalize.css'
 import './index.css'
 
 const root = createRoot(document.getElementById('root')!)
+
+disableContextMenu()
 
 root.render(
   <ErrorBoundary>
