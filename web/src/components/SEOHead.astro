@@ -1,0 +1,29 @@
+---
+const lang = Astro.currentLocale
+
+const locales = {
+  en: {
+    title: 'Redis Studio',
+    description:
+      '🚀 A lightweight, cross-platform Redis GUI Client. Redis Studio is designed to provide a simple and efficient way to manage and monitor your Redis instances. Available for Mac, Windows, and Linux.',
+  },
+  zh: {
+    title: 'Redis Studio',
+    description:
+      '🚀 轻量级、跨平台的 Redis GUI（图形用户界面）。Redis Studio 旨在提供一种简单高效的方式来管理和监控您的 Redis 实例。适用于 Mac、Windows 和 Linux。',
+  },
+}
+
+const locale = locales[lang as 'zh' | 'en']
+---
+
+<title>{locale.title}</title>
+<meta name="description" content={locale.description} />
+
+<meta property="og:title" content={locale.title} />
+<meta property="og:description" content={locale.description} />
+<meta property="og:type" content="website" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={locale.title} />
+<meta name="twitter:description" content={locale.description} />
