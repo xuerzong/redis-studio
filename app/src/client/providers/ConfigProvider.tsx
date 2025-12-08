@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDarkMode } from '@client/hooks/useDarkMode'
-import { getSystemConfig, setSystemConfig } from '@client/commands/api/config'
+import api from '@xuerzong/redis-studio-invoke/api'
 import type { Config, Lang, Theme } from '@/types'
+import { isTauri } from '@tauri-apps/api/core'
+import { type } from '@tauri-apps/plugin-os'
 
 interface ConfigContextState {
   config: Config
@@ -70,7 +72,7 @@ export const ConfigProvider: React.FC<React.PropsWithChildren> = ({
     setTimeout(() => {
       document.documentElement.style.setProperty(
         '--transition-duration',
-        '0.3s'
+        '0.1s'
       )
     })
     localStorage.setItem('rds-theme', theme)
@@ -81,8 +83,14 @@ export const ConfigProvider: React.FC<React.PropsWithChildren> = ({
     localStorage.setItem('rds-lang', lang)
   }, [lang])
 
+  useEffect(() => {
+    if (isTauri()) {
+      document.documentElement.setAttribute('data-tauri', type())
+    }
+  }, [])
+
   const fetchConfig = useCallback(async () => {
-    const nextConfig = await getSystemConfig()
+    const nextConfig = await api.getSystemConfig()
     if (nextConfig) {
       setConfig((pre) => ({ ...pre, ...nextConfig }))
     }
@@ -92,7 +100,7 @@ export const ConfigProvider: React.FC<React.PropsWithChildren> = ({
     async (newConfig: Partial<Config>) => {
       const nextConfig = { ...config, ...newConfig }
       setConfig(nextConfig)
-      await setSystemConfig(nextConfig)
+      await api.setSystemConfig(nextConfig)
       fetchConfig()
     },
     [config, fetchConfig]

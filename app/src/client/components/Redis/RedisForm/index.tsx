@@ -8,10 +8,7 @@ import { FormField } from '@client/components/ui/Form'
 import { queryConnections } from '@client/stores/appStore'
 import s from './index.module.scss'
 import { RedisSSLSwitch } from './RedisSSLSwitch'
-import {
-  createConnection,
-  updateConnection,
-} from '@client/commands/api/connections'
+import api from '@xuerzong/redis-studio-invoke/api'
 import { useIntlContext } from '@/client/providers/IntlProvider'
 
 interface RedisFormData {
@@ -64,22 +61,22 @@ export const RedisForm: React.FC<RedisFormProps> = ({
       return { success: false, error: 'Host Is Required' }
     }
 
-    if (!values.port) {
+    if (!values.port || isNaN(Number(values.port))) {
       return { success: false, error: 'Port Is Required' }
     }
 
-    return { success: true, data: values }
+    return { success: true, data: { ...values, port: Number(values.port) } }
   }
 
   const onCreateConnection = async () => {
-    const { success, error } = await validateValues()
+    const { success, error, data } = await validateValues()
     if (!success) {
       console.error(error)
       toast.error('Form Data Error')
       return
     }
     setSubmitLoading(true)
-    toast.promise(createConnection(values), {
+    toast.promise(api.createConnection(data), {
       loading: 'Loading...',
       success(newConnectionId) {
         navigate(`/${newConnectionId}`)
@@ -106,7 +103,7 @@ export const RedisForm: React.FC<RedisFormProps> = ({
     }
     setSubmitLoading(true)
     if (defaultValues?.id) {
-      toast.promise(updateConnection(defaultValues.id, values), {
+      toast.promise(api.updateConnection(defaultValues.id, values), {
         loading: 'Loading...',
         success() {
           queryConnections()
