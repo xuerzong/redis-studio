@@ -19,6 +19,13 @@ export const RedisTerminal: React.FC<RedisTerminalProps> = ({ redisId }) => {
     }
     const [command, ...args] = parts
     if (!command) return
+
+    if (command.trim().toUpperCase().startsWith('SUBSCRIBE')) {
+      term.writeln(
+        colorize('Blue', 'Use Pub/Sub tool to subscribe to channels.')
+      )
+      return
+    }
     await sendCommand({
       id: redisId,
       command,
