@@ -1,0 +1,10 @@
+.EditableContent {
+  outline: none;
+  border-radius: var(--border-radius);
+
+  &[data-focused='true'] {
+    box-shadow:
+      0 0 0 3px rgba(var(--color-primary) / 0.3),
+      0 0 0 1px var(--primary-color);
+  }
+}

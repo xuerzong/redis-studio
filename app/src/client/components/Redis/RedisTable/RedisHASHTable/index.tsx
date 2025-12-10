@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { delHASHData, setHASHData, type HASHData } from '@client/commands/redis'
 import { useRedisKeyStateContext } from '@client/providers/RedisKeyStateContext'
 import { RedisBaseTable } from '../RedisBaseTable'
+import { EditableContent } from '@client/components/EditableContent'
 
 export const RedisHASHTable: React.FC = () => {
   const {
@@ -25,6 +26,9 @@ export const RedisHASHTable: React.FC = () => {
           key: 'field',
           label: 'Field',
           width: '50%',
+          render(value) {
+            return <EditableContent value={value} />
+          },
         },
         {
           key: 'value',
