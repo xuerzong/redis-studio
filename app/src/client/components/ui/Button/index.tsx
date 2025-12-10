@@ -1,8 +1,9 @@
 import React from 'react'
 import { cn } from '@client/utils/cn'
+import { Box, type BoxProps, type PolymorphicComponentType } from '../Box'
 import './index.scss'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends BoxProps<'button'> {
   variant?: 'default' | 'outline' | 'ghost' | 'subtle'
   loading?: boolean
 }
@@ -10,7 +11,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, loading, ...restProps }, ref) => {
     return (
-      <button
+      <Box<PolymorphicComponentType<'button'>>
+        as="button"
         className={cn('Button', className)}
         {...restProps}
         data-variant={variant}

@@ -17,11 +17,9 @@ export const RedisKeysTreeToolbar = () => {
         width="100%"
         display="flex"
         alignItems="center"
-        style={
-          {
-            '--border-radius': 0,
-          } as any
-        }
+        theme={{
+          borderRadius: 0,
+        }}
         className={s.RedisKeysToolbar}
       >
         <RedisKeysFilterTypeSelector />

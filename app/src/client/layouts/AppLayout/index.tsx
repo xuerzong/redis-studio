@@ -55,11 +55,9 @@ export const AppLayout = () => {
           }}
         >
           <Box
-            style={
-              {
-                '--border-radius': 0,
-              } as any
-            }
+            theme={{
+              borderRadius: 0,
+            }}
             display="flex"
             alignItems="center"
             justifyContent="flex-end"

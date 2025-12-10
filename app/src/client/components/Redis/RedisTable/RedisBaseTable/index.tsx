@@ -110,11 +110,9 @@ export const RedisBaseTable: React.FC<RedisBaseTableProps> = ({
                   setFormDefaultValues(record || defaultFormValues)
                   setFormValues(record || defaultFormValues)
                 }}
-                style={
-                  {
-                    '--size': '1.5rem',
-                  } as any
-                }
+                theme={{
+                  size: '1.5rem',
+                }}
               >
                 <PencilIcon />
               </IconButton>
@@ -126,11 +124,9 @@ export const RedisBaseTable: React.FC<RedisBaseTableProps> = ({
                   setFormValues(record || defaultFormValues)
                   setDelOpen(true)
                 }}
-                style={
-                  {
-                    '--size': '1.5rem',
-                  } as any
-                }
+                theme={{
+                  size: '1.5rem',
+                }}
               >
                 <TrashIcon />
               </IconButton>
