@@ -67,11 +67,9 @@ export const RedisLayoutComponent: React.FC = () => {
             </Button>
           )}
           <Box
-            style={
-              {
-                '--border-radius': 0,
-              } as any
-            }
+            theme={{
+              borderRadius: 0,
+            }}
             display="flex"
             alignItems="center"
             marginLeft="auto"

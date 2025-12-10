@@ -4,6 +4,7 @@ import { mergeProps } from '@client/utils/props'
 import React, { useMemo } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { useDisplayTheme } from '@client/providers/ConfigProvider'
+import { kebabCase } from 'string-ts'
 
 const stylePropertyKeys = [
   'position',
@@ -80,6 +81,10 @@ const stylePropertyKeys = [
 
 type StyleKey = (typeof stylePropertyKeys)[number]
 
+const themeVariableKeys = ['size', 'borderRadius'] as const
+
+type ThemeVariableKey = (typeof themeVariableKeys)[number]
+
 export type StyleProperties = Pick<React.CSSProperties, StyleKey>
 
 type DefaultElement = 'div'
@@ -90,17 +95,26 @@ interface BoxOwnProps {
   children?: React.ReactNode
 }
 
-type BoxProps<Root extends React.ElementType = DefaultElement> =
+export type BoxProps<Root extends React.ElementType = DefaultElement> =
   React.ComponentPropsWithoutRef<Root> &
     Omit<BoxOwnProps, 'as'> &
     BoxOwnProps &
     StyleProperties & {
       colorPalette?: ColorPalette
+      theme?: Partial<Record<ThemeVariableKey, number | string>>
+      [key: `data-${string}`]: any
     }
 
 const BoxComponent = React.forwardRef(
   <T extends React.ElementType = DefaultElement>(
-    { as = 'div', asChild, children, colorPalette, ...restProps }: BoxProps<T>,
+    {
+      as = 'div',
+      asChild,
+      children,
+      colorPalette,
+      theme,
+      ...restProps
+    }: BoxProps<T>,
     ref: React.Ref<any>
   ) => {
     const displayTheme = useDisplayTheme()
@@ -132,6 +146,16 @@ const BoxComponent = React.forwardRef(
       )
     }, [displayTheme, colorPalette])
 
+    const themeVars = useMemo(() => {
+      if (!theme) return {}
+      return Object.entries(theme).reduce((pre, [key, value]) => {
+        return {
+          ...pre,
+          [`--${kebabCase(key)}`]: value,
+        }
+      }, {})
+    }, [theme])
+
     const componentProps = omit(restProps, ...stylePropertyKeys)
     const styleProps = pick(restProps, ...stylePropertyKeys)
 
@@ -139,6 +163,7 @@ const BoxComponent = React.forwardRef(
       style: {
         ...styleProps,
         ...colorPaletteVars,
+        ...themeVars,
       },
     })
 
@@ -155,9 +180,17 @@ const BoxComponent = React.forwardRef(
   }
 )
 
-type PolymorphicComponent = <T extends React.ElementType = DefaultElement>(
+export type PolymorphicComponent = <
+  T extends React.ElementType = DefaultElement,
+>(
   props: BoxProps<T> & { ref?: React.Ref<any> }
 ) => React.ReactElement | null
+
+export interface PolymorphicComponentType<
+  T extends React.ElementType = DefaultElement,
+> {
+  (props: BoxProps<T> & { ref?: React.Ref<any> }): React.ReactElement | null
+}
 
 export const Box: PolymorphicComponent & { displayName?: string } =
   BoxComponent as PolymorphicComponent & { displayName?: string }
