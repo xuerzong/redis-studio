@@ -5,6 +5,10 @@ import React, { useMemo } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { useDisplayTheme } from '@client/providers/ConfigProvider'
 import { kebabCase } from 'string-ts'
+import {
+  useStyleSheet,
+  generateStyleClassName,
+} from '@client/utils/useStyleSheet'
 
 const stylePropertyKeys = [
   'position',
@@ -119,6 +123,7 @@ const BoxComponent = React.forwardRef(
     }: BoxProps<T>,
     ref: React.Ref<any>
   ) => {
+    const styleSheet = useStyleSheet()
     const displayTheme = useDisplayTheme()
     const Component = asChild ? Slot : as
 
@@ -160,10 +165,14 @@ const BoxComponent = React.forwardRef(
 
     const componentProps = omit(restProps, ...stylePropertyKeys)
     const styleProps = pick(restProps, ...stylePropertyKeys)
-
+    styleSheet(styleProps)
     const mergedProps = mergeProps(componentProps, {
+      className: Object.entries(styleProps)
+        .map(([key, value]) => {
+          return generateStyleClassName(kebabCase(key), value!)
+        })
+        .join(' '),
       style: {
-        ...styleProps,
         ...colorPaletteVars,
         ...themeVars,
       },
