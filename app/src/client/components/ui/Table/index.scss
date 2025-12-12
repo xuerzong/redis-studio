@@ -41,6 +41,10 @@
 
   tbody {
     tr {
+      transition: background-color var(--transition-duration) ease-in;
+      &:hover {
+        background-color: rgba(var(--color-muted) / 0.5);
+      }
       td {
         &:last-child {
           border-right: none !important;

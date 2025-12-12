@@ -161,6 +161,9 @@ export const RedisKeyCreateForm = () => {
       <Box padding="var(--spacing-md)">
         {values.type === 'STRING' ? (
           <Editor
+            theme={{
+              editorHeight: '20rem',
+            }}
             value={values.value}
             onChange={(e) => {
               onChange({ value: e })

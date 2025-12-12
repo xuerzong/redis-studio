@@ -33,7 +33,13 @@ export const RedisSTRINGEditor = () => {
 
   return (
     <Box display="flex" flexDirection="column" gap="var(--spacing-md)">
-      <Editor value={value} onChange={(e) => setValue(e)} />
+      <Editor
+        theme={{
+          editorHeight: '20rem',
+        }}
+        value={value}
+        onChange={(e) => setValue(e)}
+      />
       <Box display="flex" alignItems="center" justifyContent="flex-end">
         <Button onClick={onSave} disabled={loading} loading={loading}>
           Save Change

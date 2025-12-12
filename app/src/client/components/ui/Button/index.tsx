@@ -3,7 +3,7 @@ import { cn } from '@client/utils/cn'
 import { Box, type BoxProps, type PolymorphicComponentType } from '../Box'
 import './index.scss'
 
-interface ButtonProps extends BoxProps<'button'> {
+export interface ButtonProps extends BoxProps<'button'> {
   variant?: 'default' | 'outline' | 'ghost' | 'subtle'
   loading?: boolean
 }

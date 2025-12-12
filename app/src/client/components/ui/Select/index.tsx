@@ -1,16 +1,16 @@
 import { cn } from '@client/utils/cn'
 import './index.scss'
 import { ChevronDownIcon } from 'lucide-react'
+import { Box, type BoxProps, type PolymorphicComponentType } from '../Box'
 
 type SelectOption = {
   label: React.ReactNode
   value: string
 }
-interface SelectProps {
+interface SelectProps extends Omit<BoxProps<'div'>, 'onChange'> {
   value?: string
   options: SelectOption[]
   onChange?: (value: string, option: SelectOption) => void
-  className?: string
 }
 
 export const Select: React.FC<SelectProps> = ({
@@ -18,9 +18,13 @@ export const Select: React.FC<SelectProps> = ({
   options = [],
   onChange,
   className,
+  ...restProps
 }) => {
   return (
-    <div className={cn('Select', className)}>
+    <Box<PolymorphicComponentType<'div'>>
+      className={cn('Select', className)}
+      {...restProps}
+    >
       <select
         value={value}
         className="SelectRoot"
@@ -39,6 +43,6 @@ export const Select: React.FC<SelectProps> = ({
         ))}
       </select>
       <ChevronDownIcon className="SelectIcon" />
-    </div>
+    </Box>
   )
 }

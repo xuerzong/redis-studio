@@ -81,7 +81,7 @@ const stylePropertyKeys = [
 
 type StyleKey = (typeof stylePropertyKeys)[number]
 
-const themeVariableKeys = ['size', 'borderRadius'] as const
+const themeVariableKeys = ['size', 'borderRadius', 'fontSize'] as const
 
 type ThemeVariableKey = (typeof themeVariableKeys)[number]
 
@@ -101,7 +101,9 @@ export type BoxProps<Root extends React.ElementType = DefaultElement> =
     BoxOwnProps &
     StyleProperties & {
       colorPalette?: ColorPalette
-      theme?: Partial<Record<ThemeVariableKey, number | string>>
+      theme?: Partial<Record<ThemeVariableKey, number | string>> & {
+        [key: string]: string | number
+      }
       [key: `data-${string}`]: any
     }
 

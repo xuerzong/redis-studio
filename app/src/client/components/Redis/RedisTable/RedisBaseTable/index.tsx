@@ -101,7 +101,7 @@ export const RedisBaseTable: React.FC<RedisBaseTableProps> = ({
             justifyContent="center"
             gap="0.25rem"
           >
-            {onRowEdit && (
+            {/* {onRowEdit && (
               <IconButton
                 variant="ghost"
                 onClick={() => {
@@ -116,7 +116,7 @@ export const RedisBaseTable: React.FC<RedisBaseTableProps> = ({
               >
                 <PencilIcon />
               </IconButton>
-            )}
+            )} */}
             {onRowDel && (
               <IconButton
                 variant="ghost"

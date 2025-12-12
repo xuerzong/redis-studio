@@ -34,6 +34,9 @@ export const RedisHASHTable: React.FC = () => {
           key: 'value',
           label: 'Value',
           width: '50%',
+          render(value) {
+            return <EditableContent value={value} />
+          },
         },
       ]}
       fields={[

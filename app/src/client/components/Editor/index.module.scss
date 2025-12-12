@@ -18,10 +18,12 @@
 
   :global {
     .cm-editor {
-      height: var(--editor-height);
+      height: var(--editor-height, '100%');
+      background-color: var(--background-color);
+      font-size: 0.875rem;
 
       .cm-selectionBackground {
-        background-color: rgba(var(--color-primary) / 0.5) !important;
+        background-color: rgba(var(--color-primary) / 0.3) !important;
       }
     }
     .cm-focused {

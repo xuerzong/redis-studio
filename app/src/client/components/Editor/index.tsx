@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { FilesIcon, XCircleIcon } from 'lucide-react'
+import { XCircleIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import copy from 'copy-to-clipboard'
 import { basicSetup, EditorView } from 'codemirror'
 import { json } from '@codemirror/lang-json'
 import { EditorState, Compartment, Prec } from '@codemirror/state'
-import { Box } from '@client/components/ui/Box'
-import { IconButton } from '@client/components/ui/Button'
+import { Box, type BoxProps } from '@client/components/ui/Box'
 import { Select } from '@client/components/ui/Select'
 import { cn } from '@client/utils/cn'
 import s from './index.module.scss'
+import { CopyButton } from '../CopyButton'
 
-interface EditorProps {
+interface EditorProps extends Omit<BoxProps<'div'>, 'onChange'> {
   value?: string
   onChange?: (value: string) => void
   height?: string
@@ -19,10 +19,21 @@ interface EditorProps {
 
 const languageExtension = new Compartment()
 
+const supportedLanguages = [
+  {
+    label: 'PlainText',
+    value: 'plaintext',
+  },
+  {
+    label: 'JSON',
+    value: 'json',
+  },
+]
+
 export const Editor: React.FC<EditorProps> = ({
   value,
   onChange,
-  height,
+  theme,
   ...restProps
 }) => {
   const editorViewerRef = useRef<EditorView>(null)
@@ -30,16 +41,6 @@ export const Editor: React.FC<EditorProps> = ({
   const [language, setLanguage] = useState('plaintext')
   const [hasFocused, setHasFocused] = useState(false)
   const [editorError, setEditorError] = useState('')
-  const options = [
-    {
-      label: 'PlainText',
-      value: 'plaintext',
-    },
-    {
-      label: 'JSON',
-      value: 'json',
-    },
-  ]
 
   const editorValue = useMemo(() => {
     if (!value) {
@@ -81,12 +82,10 @@ export const Editor: React.FC<EditorProps> = ({
       extensions: [
         basicSetup,
         languageExtension.of([]),
+        EditorView.lineWrapping,
         EditorView.domEventHandlers({
           focus: () => setHasFocused(true),
           blur: () => setHasFocused(false),
-          select: (e) => {
-            console.log(e)
-          },
         }),
         updateListener,
       ],
@@ -111,7 +110,6 @@ export const Editor: React.FC<EditorProps> = ({
     const editorViewer = editorViewerRef.current
     if (editorViewer) {
       const currentDoc = editorViewer.state.doc.toString()
-
       if (editorValue !== currentDoc) {
         editorViewer.dispatch({
           changes: {
@@ -150,27 +148,23 @@ export const Editor: React.FC<EditorProps> = ({
       display="flex"
       flexDirection="column"
       gap="0.5rem"
+      theme={theme}
       {...restProps}
     >
       <Box display="flex" gap="0.5rem">
-        <Box width="10rem">
+        <Box width="calc(var(--font-size, 0.875rem) * 8)">
           <Select
+            theme={theme}
             value={language}
-            options={options}
+            options={supportedLanguages}
             onChange={onChangeLanguage}
           />
         </Box>
-        <IconButton variant="ghost" onClick={onCopy}>
-          <FilesIcon />
-        </IconButton>
+        <CopyButton text={value} theme={theme} variant="ghost" />
       </Box>
       <Box
-        style={
-          {
-            '--editor-height': height || '20rem',
-          } as any
-        }
-        className={cn('Editor', s.Editor)}
+        minHeight={theme?.editorHeight}
+        className={s.Editor}
         ref={editorRef}
         data-focused={hasFocused}
       />
@@ -187,6 +181,8 @@ export const Editor: React.FC<EditorProps> = ({
         padding="0.5rem"
         fontSize="0.75rem"
         lineHeight="1rem"
+        color="var(--color)"
+        backgroundColor="var(--bg-color)"
       >
         <XCircleIcon className={s.EditorErrorIcon} />
         {editorError}
