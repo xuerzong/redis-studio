@@ -5,7 +5,7 @@ import {
   TrashIcon,
 } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { TreeNode } from '@client/utils/tree'
 import {
   ContextMenu,

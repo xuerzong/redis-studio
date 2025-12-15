@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { open } from '@tauri-apps/plugin-dialog'
 import { isTauri } from '@tauri-apps/api/core'
-import { Box } from '../Box'
+import { Box } from '@rds/style'
 import { XIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button, IconButton } from '../Button'

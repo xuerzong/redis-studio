@@ -1,4 +1,4 @@
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import {
   RedisKeyStateProvider,
   useRedisKeyStateContext,

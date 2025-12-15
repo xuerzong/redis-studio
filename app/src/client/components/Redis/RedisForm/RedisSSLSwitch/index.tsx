@@ -1,4 +1,4 @@
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Button } from '@client/components/ui/Button'
 import { FileInput } from '@client/components/ui/FileInput'
 import { FormField } from '@client/components/ui/Form'

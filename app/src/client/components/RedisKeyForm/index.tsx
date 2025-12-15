@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { Editor } from '@client/components/Editor'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Button } from '@client/components/ui/Button'
 import { Input } from '@client/components/ui/Input'
 import { Select } from '@client/components/ui/Select'

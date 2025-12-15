@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '../Box'
+import { Box } from '@rds/style'
 import './index.scss'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}

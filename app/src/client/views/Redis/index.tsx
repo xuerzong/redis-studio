@@ -1,5 +1,5 @@
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { RedisKeyViewer } from '@client/components/Redis/RedisKeyViewer'
 import { RedisKeyCreateForm } from '@client/components/RedisKeyForm'
 import { RedisKeysMenu } from '@client/components/Redis/RedisKeysMenu'

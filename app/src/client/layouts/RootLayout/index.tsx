@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router'
 import { DatabaseIcon, SettingsIcon } from 'lucide-react'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { IconButton } from '@client/components/ui/Button'
 import { GithubIcon } from '@client/components/Icons/GithubIcon'
 import { Tooltip } from '@client/components/ui/Tooltip'

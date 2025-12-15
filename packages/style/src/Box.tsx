@@ -1,14 +1,13 @@
-import type { ColorPalette } from '@client/constants/colorPalettes'
-import { omit, pick } from '@client/utils/object'
-import { mergeProps } from '@client/utils/props'
-import React, { useMemo } from 'react'
-import { Slot } from '@radix-ui/react-slot'
-import { useDisplayTheme } from '@client/providers/ConfigProvider'
-import { kebabCase } from 'string-ts'
 import {
-  useStyleSheet,
-  generateStyleClassName,
-} from '@client/utils/useStyleSheet'
+  colorPaletteLevels,
+  type ColorPalette,
+} from '@rds/constants/colorPalettes'
+import { omit, pick } from '@rds/utils/object'
+import { mergeProps } from '@rds/utils/props'
+import React, { useLayoutEffect, useMemo } from 'react'
+import { Slot } from '@radix-ui/react-slot'
+import { kebabCase } from 'string-ts'
+import { useStyleSheet, generateStyleClassName } from './useStyleSheet'
 
 const stylePropertyKeys = [
   'position',
@@ -17,7 +16,11 @@ const stylePropertyKeys = [
   'bottom',
   'right',
   'transform',
+  'transformOrigin',
+  'perspective',
   'display',
+  'visibility',
+  'zIndex',
 
   'margin',
   'marginTop',
@@ -37,50 +40,114 @@ const stylePropertyKeys = [
   'minWidth',
   'maxHeight',
   'minHeight',
+  'boxSizing',
+  'contain',
 
   'border',
   'borderTop',
   'borderLeft',
   'borderRight',
   'borderBottom',
+  'borderStyle',
+  'borderWidth',
+  'borderColor',
+  'boxShadow',
 
   'borderRadius',
-  'borderColor',
-  // flex
+  'borderTopLeftRadius',
+  'borderTopRightRadius',
+  'borderBottomLeftRadius',
+  'borderBottomRightRadius',
+
   'flex',
   'flexShrink',
   'flexGrow',
+  'flexBasis',
+  'flexWrap',
   'flexDirection',
   'alignItems',
+  'alignSelf',
+  'alignContent',
   'justifyContent',
+  'order',
 
-  // grid
   'gridTemplateColumns',
+  'gridTemplateRows',
+  'gridTemplateAreas',
+  'gridColumn',
+  'gridRow',
+  'gridArea',
   'gap',
+  'rowGap',
+  'columnGap',
+  'placeContent',
+  'placeItems',
 
+  'font',
+  'fontFamily',
   'fontSize',
+  'fontStyle',
+  'fontVariant',
   'fontWeight',
   'textAlign',
+  'textAlignLast',
+  'textDecoration',
+  'textDecorationColor',
+  'textDecorationStyle',
+  'textDecorationLine',
+  'textIndent',
+  'textOverflow',
+  'textTransform',
+  'whiteSpace',
+  'wordBreak',
+  'wordWrap',
+  'letterSpacing',
 
   'color',
   'lineHeight',
+
+  'background',
   'backgroundColor',
+  'backgroundImage',
+  'backgroundSize',
+  'backgroundRepeat',
+  'backgroundPosition',
+  'backgroundAttachment',
+
   'opacity',
   'pointerEvents',
   'cursor',
   'userSelect',
-  'wordBreak',
-  'boxSizing',
-  'overscrollBehavior',
-  'zIndex',
-
-  'textTransform',
 
   'overflow',
   'overflowX',
   'overflowY',
+  'overscrollBehavior',
+  'overflowWrap',
 
+  'transition',
+  'transitionProperty',
+  'transitionDuration',
+  'transitionTimingFunction',
+  'transitionDelay',
+
+  'animation',
+  'animationName',
+  'animationDuration',
+  'animationTimingFunction',
+  'animationDelay',
+  'animationIterationCount',
+  'animationDirection',
+  'animationFillMode',
+  'animationPlayState',
+
+  'filter',
   'backdropFilter',
+  'clipPath',
+
+  'float',
+  'clear',
+  'listStyle',
 ] as const
 
 type StyleKey = (typeof stylePropertyKeys)[number]
@@ -124,7 +191,6 @@ const BoxComponent = React.forwardRef(
     ref: React.Ref<any>
   ) => {
     const styleSheet = useStyleSheet()
-    const displayTheme = useDisplayTheme()
     const Component = asChild ? Slot : as
 
     const colorPaletteVars = useMemo(() => {
@@ -134,24 +200,13 @@ const BoxComponent = React.forwardRef(
       if (_colorPalette === 'danger') _colorPalette = 'red'
       if (_colorPalette === 'success') _colorPalette = 'green'
       if (_colorPalette === 'warning') _colorPalette = 'yellow'
-      return [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].reduce(
-        (pre, cur) => {
-          return {
-            ...pre,
-            [`--color-palettle-${cur}`]: `var(--color-${_colorPalette}-${cur})`,
-          }
-        },
-        displayTheme === 'dark'
-          ? {
-              '--color': 'rgba(var(--color-palettle-500) / 1)',
-              '--bg-color': 'rgba(var(--color-palettle-950) / 1)',
-            }
-          : {
-              '--color': 'rgba(var(--color-palettle-600) / 1)',
-              '--bg-color': 'rgba(var(--color-palettle-100) / 1)',
-            }
-      )
-    }, [displayTheme, colorPalette])
+      return colorPaletteLevels.reduce((pre, cur) => {
+        return {
+          ...pre,
+          [`--color-palette-${cur}`]: `var(--color-${_colorPalette}-${cur})`,
+        }
+      }, {})
+    }, [colorPalette])
 
     const themeVars = useMemo(() => {
       if (!theme) return {}
@@ -165,11 +220,17 @@ const BoxComponent = React.forwardRef(
 
     const componentProps = omit(restProps, ...stylePropertyKeys)
     const styleProps = pick(restProps, ...stylePropertyKeys)
-    styleSheet(styleProps)
+
+    useLayoutEffect(() => {
+      styleSheet(styleProps)
+    }, [styleProps, styleSheet])
+
+    const styleEntries = Object.entries(styleProps as Record<string, unknown>)
+
     const mergedProps = mergeProps(componentProps, {
-      className: Object.entries(styleProps)
+      className: styleEntries
         .map(([key, value]) => {
-          return generateStyleClassName(kebabCase(key), value!)
+          return generateStyleClassName(kebabCase(key), value as any)
         })
         .join(' '),
       style: {

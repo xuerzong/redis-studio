@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'sonner'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Button } from '@client/components/ui/Button'
 import { Input } from '@client/components/ui/Input'
 import { FormField } from '@client/components/ui/Form'

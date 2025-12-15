@@ -1,5 +1,5 @@
 import { RedisForm } from '@client/components/Redis/RedisForm'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Card } from '@client/components/ui/Card'
 import { useRedisId } from '@client/hooks/useRedisId'
 import { useAppStore } from '@client/stores/appStore'

@@ -1,0 +1,13 @@
+{
+  "name": "@rds/style",
+  "version": "0.0.0",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@emotion/hash": "^0.9.2",
+    "@radix-ui/react-slot": "^1.2.4"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

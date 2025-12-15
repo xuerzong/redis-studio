@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Button } from '@client/components/ui/Button'
 import { Modal } from '@client/components/ui/Modal'
 import { toast } from 'sonner'

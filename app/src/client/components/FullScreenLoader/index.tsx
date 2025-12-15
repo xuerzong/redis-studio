@@ -1,5 +1,5 @@
 import { Loader } from '@client/components/Loader'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 
 export const FullScreenLoader: React.FC = () => {
   return (

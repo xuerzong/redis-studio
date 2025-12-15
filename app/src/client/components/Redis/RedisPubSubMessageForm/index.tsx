@@ -1,5 +1,5 @@
 import { Editor } from '@client/components/Editor'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Button } from '@client/components/ui/Button'
 import { FormField } from '@client/components/ui/Form'
 import { Input } from '@client/components/ui/Input'

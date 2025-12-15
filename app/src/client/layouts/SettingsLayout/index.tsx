@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 
 export const SettingsLayout: React.FC = () => {
   return (

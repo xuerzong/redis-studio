@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { CheckIcon, FilesIcon, PencilIcon, XIcon } from 'lucide-react'
 import { useSyncState } from '@client/hooks/useSyncState'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { IconButton } from '@client/components/ui/Button'
 import { Editor } from '../Editor'
 import { CopyButton } from '../CopyButton'
@@ -97,7 +97,7 @@ export const EditableContent: React.FC<EditableContentProps> = ({ value }) => {
             colorPalette="red"
             theme={{ size: '1.5rem' }}
             variant="ghost"
-            onClick={(e) => {
+            onClick={() => {
               setIsEditing(false)
             }}
           >
@@ -110,7 +110,7 @@ export const EditableContent: React.FC<EditableContentProps> = ({ value }) => {
             onMouseDown={(e) => {
               e.preventDefault()
             }}
-            onClick={(e) => {
+            onClick={() => {
               console.log('save', content)
             }}
           >

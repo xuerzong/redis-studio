@@ -1,6 +1,6 @@
 import React from 'react'
 import { cn } from '@client/utils/cn'
-import { Box, type BoxProps, type PolymorphicComponentType } from '../Box'
+import { Box, type BoxProps, type PolymorphicComponentType } from '@rds/style'
 import './index.scss'
 
 export interface ButtonProps extends BoxProps<'button'> {

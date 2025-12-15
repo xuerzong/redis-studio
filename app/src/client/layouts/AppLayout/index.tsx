@@ -7,7 +7,7 @@ import {
   PanelResizeHandle,
   type ImperativePanelHandle,
 } from 'react-resizable-panels'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { IconButton } from '@client/components/ui/Button'
 import {
   changeConnectionsCollapsed,

@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react'
-import { cn } from './cn'
 
 type Props = {
   className?: string
@@ -18,7 +17,9 @@ const mergePropObj = (targetProp: Props, key: string, value: any) => {
   }
 
   if (key === 'className') {
-    targetProp.className = cn(targetProp.className, value)
+    targetProp.className = [targetProp.className, value]
+      .filter(Boolean)
+      .join(' ')
     return
   }
 

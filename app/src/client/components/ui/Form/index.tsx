@@ -1,4 +1,4 @@
-import { Box, type BoxProps } from '../Box'
+import { Box, type BoxProps } from '@rds/style'
 import './index.scss'
 
 export const Form = () => {

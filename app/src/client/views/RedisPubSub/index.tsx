@@ -1,4 +1,4 @@
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 import { RedisPubSubMessageForm } from '@client/components/Redis/RedisPubSubMessageForm'
 import {

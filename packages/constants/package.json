@@ -1,0 +1,8 @@
+{
+  "name": "@rds/constants",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  }
+}

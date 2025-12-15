@@ -1,13 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { XCircleIcon } from 'lucide-react'
-import { toast } from 'sonner'
-import copy from 'copy-to-clipboard'
 import { basicSetup, EditorView } from 'codemirror'
 import { json } from '@codemirror/lang-json'
 import { EditorState, Compartment, Prec } from '@codemirror/state'
-import { Box, type BoxProps } from '@client/components/ui/Box'
+import { Box, type BoxProps } from '@rds/style'
 import { Select } from '@client/components/ui/Select'
-import { cn } from '@client/utils/cn'
 import s from './index.module.scss'
 import { CopyButton } from '../CopyButton'
 
@@ -132,14 +129,6 @@ export const Editor: React.FC<EditorProps> = ({
 
   const onChangeLanguage = (lang: string) => {
     setLanguage(lang)
-  }
-
-  const onCopy = () => {
-    const copyText = value
-    if (copyText) {
-      copy(copyText)
-      toast.success('Copy success')
-    }
   }
 
   return (

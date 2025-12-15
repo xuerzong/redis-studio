@@ -1,6 +1,6 @@
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Button } from '@client/components/ui/Button'
 import { Modal } from '@client/components/ui/Modal'
 import { queryConnections } from '@client/stores/appStore'

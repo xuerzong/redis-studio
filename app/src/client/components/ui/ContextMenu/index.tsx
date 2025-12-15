@@ -1,7 +1,7 @@
 import { ContextMenu as BaseContextMenu } from '@base-ui-components/react/context-menu'
 import { Slot } from '@radix-ui/react-slot'
 import './index.scss'
-import { Box } from '../Box'
+import { Box } from '@rds/style'
 
 export type ContextMenuItemProps = {
   key: string

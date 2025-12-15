@@ -1,7 +1,7 @@
 import { cn } from '@client/utils/cn'
 import './index.scss'
 import { ChevronDownIcon } from 'lucide-react'
-import { Box, type BoxProps, type PolymorphicComponentType } from '../Box'
+import { Box, type BoxProps, type PolymorphicComponentType } from '@rds/style'
 
 type SelectOption = {
   label: React.ReactNode

@@ -1,12 +1,11 @@
 import { toast } from 'sonner'
 import { useDebouncedCallback } from 'use-debounce'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Table, type TableColumn } from '@client/components/ui/Table'
 import { Button, IconButton } from '@client/components/ui/Button'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  PencilIcon,
   PlusIcon,
   SearchIcon,
   TrashIcon,
@@ -56,7 +55,7 @@ export const RedisBaseTable: React.FC<RedisBaseTableProps> = ({
   const [pageSize] = useState(100)
   const totalPage = Math.max(Math.ceil(length / 100), 1)
   const [formMode, setFormMode] = useState(0)
-  const [formDefaultValues, setFormDefaultValues] =
+  const [formDefaultValues, _setFormDefaultValues] =
     useState<any>(defaultFormValues)
   const [formValues, setFormValues] = useState<any>(defaultFormValues)
   const [addOpen, setAddOpen] = useState(false)

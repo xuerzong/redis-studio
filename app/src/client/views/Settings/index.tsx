@@ -1,6 +1,6 @@
 import { LangSelector } from '@client/components/LangSelector'
 import { ThemeSwitcher } from '@client/components/ThemeSwitcher'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { FormField } from '@client/components/ui/Form'
 import { useIntlContext } from '@client/providers/IntlProvider'
 

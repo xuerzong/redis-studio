@@ -5,7 +5,7 @@ import { getTTL } from '@client/commands/redis'
 import { NumberInputWithPrefix } from '@client/components/ui/NumberInput'
 import { useSyncState } from '@client/hooks/useSyncState'
 import { useRedisKeyStateContext } from '@client/providers/RedisKeyStateContext'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { IconButton } from '@client/components/ui/Button'
 import { expireKey } from '@client/commands/redis/key'
 

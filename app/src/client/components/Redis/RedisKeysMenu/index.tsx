@@ -2,7 +2,7 @@ import {
   RedisKeysProvider,
   useRedisKeysContext,
 } from '@client/providers/RedisKeysContext'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { RedisKeysTree } from '../RedisKeysTree'
 import { RedisKeysTreeToolbar } from '../RedisKeysTreeToolbar'
 import { useRedisContext } from '@client/providers/RedisContext'

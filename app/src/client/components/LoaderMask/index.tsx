@@ -1,4 +1,4 @@
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Loader } from '../Loader'
 import s from './index.module.scss'
 

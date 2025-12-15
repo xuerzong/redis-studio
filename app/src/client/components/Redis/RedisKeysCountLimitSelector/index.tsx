@@ -1,5 +1,5 @@
 import { useRedisKeysContext } from '@client/providers/RedisKeysContext'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Select } from '@client/components/ui/Select'
 
 export const RedisKeysCountLimitSelector = () => {

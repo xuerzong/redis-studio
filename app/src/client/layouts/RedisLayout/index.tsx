@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router'
 import { useRedisId } from '@client/hooks/useRedisId'
 import { useAppStore } from '@client/stores/appStore'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { Tooltip } from '@client/components/ui/Tooltip'
 import { Button, IconButton } from '@client/components/ui/Button'
 import {

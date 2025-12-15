@@ -1,5 +1,5 @@
 import { FolderTreeIcon, LayoutListIcon, RefreshCcwIcon } from 'lucide-react'
-import { Box } from '@client/components/ui/Box'
+import { Box } from '@rds/style'
 import { IconButton } from '@client/components/ui/Button'
 import { useRedisKeysContext } from '@client/providers/RedisKeysContext'
 import { Tooltip } from '@client/components/ui/Tooltip'
