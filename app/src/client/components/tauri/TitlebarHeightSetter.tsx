@@ -1,12 +1,13 @@
 import { useIsFullscreen } from '@client/hooks/useIsFullscreen'
 import { isTauri } from '@tauri-apps/api/core'
+import { type } from '@tauri-apps/plugin-os'
 import { useEffect } from 'react'
 
 export const TauriTitlebarSetter = () => {
   const isFullscreen = useIsFullscreen()
 
   useEffect(() => {
-    const titlebarHeight = isFullscreen ? 0 : 29
+    const titlebarHeight = isFullscreen ? 0 : type() === 'macos' ? 29 : 0
     document.documentElement.style.setProperty(
       '--titlebar-height',
       `${titlebarHeight}px`
